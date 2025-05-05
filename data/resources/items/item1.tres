@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://brswycd32at28"]
+
+[ext_resource type="Script" uid="uid://38anjej2qlmh" path="res://data/definitions/ItemData.gd" id="1_hf0vq"]
+
+[resource]
+script = ExtResource("1_hf0vq")
+item_name = "Item1"
+description = ""
+stack_size = 10
+placeholder_color = Color(0.137255, 1, 0.384314, 1)
+metadata/_custom_type_script = "uid://38anjej2qlmh"

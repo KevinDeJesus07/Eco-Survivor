@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bge8vhm7p208o"]
+
+[ext_resource type="Script" uid="uid://uwc7vmxvibcx" path="res://scripts/ui/InventorySlot.gd" id="1_ydyin"]
+
+[node name="InventorySlot" type="Panel"]
+custom_minimum_size = Vector2(50, 50)
+script = ExtResource("1_ydyin")
+
+[node name="ItemVisual" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="QuantityLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "99"

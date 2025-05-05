@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7jmefl5bf8mo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lniys"]
+size = Vector2(32, 32)
+
+[node name="EnemyPlaceholder" type="CharacterBody2D"]
+
+[node name="VisualPlaceholder" type="ColorRect" parent="."]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+color = Color(1, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lniys")

@@ -1,3 +1,17 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Archivos de exportación
+*.pck
+*.exe
+*.dmg
+*.apk
+*.aab
+
+# Archivos de traducción generados
+*.translation
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db

@@ -1,0 +1,118 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvuxylws0ulaq"]
+
+[ext_resource type="PackedScene" uid="uid://4crmle28okii" path="res://scenes/player/Player.tscn" id="1_ulelk"]
+[ext_resource type="PackedScene" uid="uid://c7jmefl5bf8mo" path="res://scenes/enemies/EnemyPlaceholder.tscn" id="2_s0hey"]
+[ext_resource type="PackedScene" uid="uid://c1mpp85jd1tk5" path="res://scenes/items/ItemPickup.tscn" id="3_kv3yx"]
+[ext_resource type="PackedScene" uid="uid://ovlo83q268bq" path="res://scenes/ui/InventoryUI.tscn" id="4_20vfb"]
+[ext_resource type="Resource" uid="uid://brswycd32at28" path="res://data/resources/items/item1.tres" id="4_ppxfd"]
+[ext_resource type="Resource" uid="uid://i74tr07lsum5" path="res://data/resources/items/item2.tres" id="6_tgr5f"]
+[ext_resource type="Script" uid="uid://dp1rjvdeiw1ok" path="res://scripts/ui/InventoryUIController.gd" id="6_vup0r"]
+[ext_resource type="Resource" uid="uid://764cf3kp7a1n" path="res://data/resources/items/item3.tres" id="7_0y56b"]
+
+[node name="MainTestScene" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_ulelk")]
+position = Vector2(114, 302)
+
+[node name="InventoryLayer" type="CanvasLayer" parent="."]
+
+[node name="CenterContainer" type="CenterContainer" parent="InventoryLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -25.0
+offset_right = -25.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryUi" parent="InventoryLayer/CenterContainer" instance=ExtResource("4_20vfb")]
+layout_mode = 2
+script = ExtResource("6_vup0r")
+inventory_slots_count = 20
+
+[node name="Pickups" type="Node2D" parent="."]
+
+[node name="items1" type="Node2D" parent="Pickups"]
+
+[node name="ItemPickup" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(246, 245)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup2" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(189, 133)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup3" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(389, 121)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup4" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(230, 429)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup5" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(472, 432)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup6" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(578, 105)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup7" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(724, 211)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup8" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(867, 103)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup9" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(711, 389)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup10" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(950, 339)
+item_data = ExtResource("4_ppxfd")
+
+[node name="ItemPickup11" parent="Pickups/items1" instance=ExtResource("3_kv3yx")]
+position = Vector2(284, 56)
+item_data = ExtResource("4_ppxfd")
+
+[node name="items2" type="Node2D" parent="Pickups"]
+
+[node name="ItemPickup" parent="Pickups/items2" instance=ExtResource("3_kv3yx")]
+position = Vector2(519, 29)
+item_data = ExtResource("6_tgr5f")
+
+[node name="ItemPickup2" parent="Pickups/items2" instance=ExtResource("3_kv3yx")]
+position = Vector2(139, 51)
+item_data = ExtResource("6_tgr5f")
+
+[node name="items3" type="Node2D" parent="Pickups"]
+
+[node name="ItemPickup" parent="Pickups/items3" instance=ExtResource("3_kv3yx")]
+position = Vector2(1023, 168)
+item_data = ExtResource("7_0y56b")
+
+[node name="ItemPickup2" parent="Pickups/items3" instance=ExtResource("3_kv3yx")]
+position = Vector2(398, 321)
+item_data = ExtResource("7_0y56b")
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="EnemyPlaceholder" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(109, 148)
+
+[node name="EnemyPlaceholder2" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(449, 223)
+
+[node name="EnemyPlaceholder3" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(121, 419)
+
+[node name="EnemyPlaceholder4" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(61, 332)
+
+[node name="EnemyPlaceholder5" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(331, 403)
