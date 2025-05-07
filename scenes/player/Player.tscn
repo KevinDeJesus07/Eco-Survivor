@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://4crmle28okii"]
+[gd_scene load_steps=4 format=3 uid="uid://4crmle28okii"]
 
 [ext_resource type="Script" uid="uid://dquxulnq5yjc7" path="res://scenes/player/PlayerController.gd" id="1_wr5hl"]
+[ext_resource type="Texture2D" uid="uid://udxwq17lpe2u" path="res://assets/art/sprites/player/Personaje.png" id="2_gfjak"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8nba"]
 size = Vector2(32, 32)
@@ -18,3 +19,8 @@ color = Color(0, 1, 0, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(32, 32)
 shape = SubResource("RectangleShape2D_o8nba")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_gfjak")

@@ -90,6 +90,10 @@ item_data = ExtResource("6_tgr5f")
 position = Vector2(139, 51)
 item_data = ExtResource("6_tgr5f")
 
+[node name="ItemPickup3" parent="Pickups/items2" instance=ExtResource("3_kv3yx")]
+position = Vector2(59, 231)
+item_data = ExtResource("6_tgr5f")
+
 [node name="items3" type="Node2D" parent="Pickups"]
 
 [node name="ItemPickup" parent="Pickups/items3" instance=ExtResource("3_kv3yx")]
@@ -98,6 +102,10 @@ item_data = ExtResource("7_0y56b")
 
 [node name="ItemPickup2" parent="Pickups/items3" instance=ExtResource("3_kv3yx")]
 position = Vector2(398, 321)
+item_data = ExtResource("7_0y56b")
+
+[node name="ItemPickup3" parent="Pickups/items3" instance=ExtResource("3_kv3yx")]
+position = Vector2(34, 102)
 item_data = ExtResource("7_0y56b")
 
 [node name="Enemies" type="Node2D" parent="."]

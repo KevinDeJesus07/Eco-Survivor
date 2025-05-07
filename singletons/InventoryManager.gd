@@ -67,7 +67,24 @@ func remove_item_from_slot(slot_index: int, quantity_to_remove: int = 1):
 func _ready():
 	slots.resize(max_slots)
 	print("InventoryManager listo con ", max_slots, " slots.")
-	var test = load("res://data/resources/items/test_item.tres")
+	var test = load("res://data/resources/items/item1.tres")
 	
-	# if test:
-	#	add_item(test, 0)
+	if test:
+		add_item(test, 0)
+
+func move_or_swap_item_in_slots(from_idx: int, to_idx: int):
+	if from_idx < 0 or from_idx >= slots.size() or to_idx < 0 or to_idx >= slots.size() or from_idx == to_idx:
+		printerr("InventoryManager: Índices de slot inválidos para mover/intercambiar: from ", from_idx, " to ", to_idx)
+		return
+		
+	if slots[from_idx] == null:
+		printerr("InventoryManager: Intento de mover desde un slot origen vacío: ", from_idx)
+		return
+	
+	print("InventoryManager: Intercambiando contenido del slot [", from_idx, "] con el slot [", to_idx, "]")
+	
+	var temp_item_at_target = slots[to_idx]
+	slots[to_idx] = slots[from_idx]
+	slots[from_idx] = temp_item_at_target
+	
+	inventory_changed.emit()

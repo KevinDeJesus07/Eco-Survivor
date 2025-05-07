@@ -10,18 +10,12 @@ custom_minimum_size = Vector2(50, 50)
 theme_override_styles/panel = SubResource("StyleBoxFlat_y842j")
 script = ExtResource("1_ydyin")
 
-[node name="ColorDisplay" type="ColorRect" parent="."]
+[node name="ItemVisual" type="ColorRect" parent="."]
 visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
-
-[node name="IconDisplay" type="TextureRect" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="QuantityLabel" type="Label" parent="."]
 layout_mode = 0
