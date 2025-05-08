@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://udxwq17lpe2u" path="res://assets/art/sprites/player/Personaje.png" id="2_gfjak"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8nba"]
-size = Vector2(32, 32)
+size = Vector2(43, 61)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_wr5hl")
@@ -17,10 +17,13 @@ offset_bottom = 48.0
 color = Color(0, 1, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(32, 32)
+position = Vector2(30.5, 25.5)
 shape = SubResource("RectangleShape2D_o8nba")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(32, 32)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_gfjak")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true

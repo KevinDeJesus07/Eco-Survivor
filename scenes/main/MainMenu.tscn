@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://yd03ie10ydsl"]
+
+[ext_resource type="Script" uid="uid://dflb1q78v2d2g" path="res://scenes/main/MainMenu.gd" id="1_qi05h"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qi05h")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 414.0
+offset_top = 189.0
+offset_right = 777.0
+offset_bottom = 277.0
+theme_override_font_sizes/font_size = 64
+text = "EcoSurvivor"
+script = ExtResource("1_qi05h")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 367.0
+offset_right = 632.0
+offset_bottom = 438.0
+theme_override_font_sizes/font_size = 24
+text = "Jugar"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

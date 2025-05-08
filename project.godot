@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="EcoSurvivor"
-run/main_scene="uid://dvuxylws0ulaq"
+run/main_scene="uid://yd03ie10ydsl"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
