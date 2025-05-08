@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://c3chvdl6k4g21"]
+
+[ext_resource type="Texture2D" uid="uid://dg2n5ma1xff5y" path="res://assets/art/sprites/items/Manzana.png" id="1_aa5f1"]
+[ext_resource type="Script" uid="uid://di6cmyp0c530w" path="res://data/definitions/Item.gd" id="1_bitfe"]
+
+[resource]
+script = ExtResource("1_bitfe")
+name = "Manzana"
+desc = ""
+is_stacked = true
+stack_max = 10
+icono = ExtResource("1_aa5f1")
+color = Color(0.627451, 0.12549, 0.941176, 1)
+metadata/_custom_type_script = "uid://di6cmyp0c530w"

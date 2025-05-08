@@ -19,9 +19,11 @@ func _log(level: Level, category: String, message: String, ctx_node: Node = null
 				printerr(final_msg)
 			Level.WARNING:
 				push_warning(final_msg)
-				print(final_msg)
-			_:
-				print(final_msg)
+				print_rich("[color=yellow]" + final_msg + "[/color]")
+			Level.INFO:
+				print_rich("[color=cyan]" + final_msg + "[/color]")
+			Level.DEBUG:
+				print_rich("[color=gray]" + final_msg + "[/color]")
 				
 func debug(category: String, message: String, ctx_node: Node = null):
 	_log(Level.DEBUG, category, message, ctx_node)

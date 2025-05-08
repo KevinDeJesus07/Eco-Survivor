@@ -1,8 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ovlo83q268bq"]
 
-[sub_resource type="GDScript" id="GDScript_0ix0h"]
-script/source = "extends PanelContainer
-"
+[ext_resource type="Script" uid="uid://cwo62u7w6hg3p" path="res://scripts/ui/InventoryUI.gd" id="1_p0ay3"]
 
 [node name="InventoryUi" type="PanelContainer"]
 custom_minimum_size = Vector2(50, 50)
@@ -13,7 +11,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = SubResource("GDScript_0ix0h")
+script = ExtResource("1_p0ay3")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://4crmle28okii" path="res://scenes/player/Player.tscn" id="1_ulelk"]
 [ext_resource type="PackedScene" uid="uid://c7jmefl5bf8mo" path="res://scenes/enemies/EnemyPlaceholder.tscn" id="2_s0hey"]
 [ext_resource type="PackedScene" uid="uid://ovlo83q268bq" path="res://scenes/ui/InventoryUI.tscn" id="4_20vfb"]
-[ext_resource type="Resource" uid="uid://c3chvdl6k4g21" path="res://data/resources/items/Manzana.tres" id="5_2phta"]
+[ext_resource type="Script" uid="uid://dp1rjvdeiw1ok" path="res://scripts/ui/InventoryUIController.gd" id="6_vup0r"]
 [ext_resource type="PackedScene" uid="uid://dncnng3roqi2o" path="res://scenes/items/Manzana.tscn" id="8_rmuq1"]
 [ext_resource type="TileSet" uid="uid://ds743rs0plb0f" path="res://assets/art/tilesets/mundo.tres" id="9_0y56b"]
 
@@ -27,6 +27,8 @@ grow_vertical = 2
 
 [node name="InventoryUi" parent="InventoryLayer/CenterContainer" instance=ExtResource("4_20vfb")]
 layout_mode = 2
+script = ExtResource("6_vup0r")
+inventory_slots_count = 20
 
 [node name="Pickups" type="Node2D" parent="."]
 
@@ -34,51 +36,39 @@ layout_mode = 2
 
 [node name="BaseItem" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(406, 72)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem2" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(469, 73)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem3" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(531, 72)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem4" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(1007, 72)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem5" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(961, 72)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem6" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(914, 74)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem7" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(861, 72)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem8" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(806, 73)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem9" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(755, 74)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem10" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(700, 73)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem11" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(644, 72)
-item = ExtResource("5_2phta")
 
 [node name="BaseItem12" parent="Pickups/Manzanas" instance=ExtResource("8_rmuq1")]
 position = Vector2(586, 72)
-item = ExtResource("5_2phta")
 
 [node name="Enemies" type="Node2D" parent="."]
 

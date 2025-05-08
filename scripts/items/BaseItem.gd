@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var item: ItemData
+@export var item: Item
 
 func _ready():
 	body_entered.connect(_on_body_entered) # Activar detección de entrada de cuerpos
@@ -22,12 +22,12 @@ func _on_body_entered(body):
 		Logger.error("BASE_ITEM", "InventoryManager no encontrado!", self)
 		return
 		
-	Logger.info("BASE_ITEM", str(body.name) + " es 'Player'. Intentando recoger " + str(item.item_name), self)
+	Logger.info("BASE_ITEM", str(body.name) + " es 'Player'. Intentando recoger " + str(item.name), self)
 	var remaining = InventoryManager.add_item(item, 1)
 	
 	if remaining != 0:
-		Logger.info("BASE_ITEM", "No se pudo recoger " + str(item.item_name) + ". Inventario lleno.", self)
+		Logger.info("BASE_ITEM", "No se pudo recoger " + str(item.name) + ". Inventario lleno.", self)
 		return
 	
-	Logger.info("BASE_ITEM", "jugador recogió: " + str(item.item_name), self)
+	Logger.info("BASE_ITEM", "jugador recogió: " + str(item.name), self)
 	queue_free() # Destruir item del suelo

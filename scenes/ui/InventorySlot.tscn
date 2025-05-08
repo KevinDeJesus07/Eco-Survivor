@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bge8vhm7p208o"]
 
-[ext_resource type="Script" uid="uid://uwc7vmxvibcx" path="res://scripts/ui/InventorySlot.gd" id="1_ydyin"]
+[ext_resource type="Script" uid="uid://dofblt61erftf" path="res://scripts/ui/InvSlot.gd" id="1_y842j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y842j"]
 bg_color = Color(0.133196, 0.133196, 0.133196, 1)
@@ -8,7 +8,7 @@ bg_color = Color(0.133196, 0.133196, 0.133196, 1)
 [node name="InventorySlot" type="Panel"]
 custom_minimum_size = Vector2(50, 50)
 theme_override_styles/panel = SubResource("StyleBoxFlat_y842j")
-script = ExtResource("1_ydyin")
+script = ExtResource("1_y842j")
 
 [node name="ColorDisplay" type="ColorRect" parent="."]
 visible = false

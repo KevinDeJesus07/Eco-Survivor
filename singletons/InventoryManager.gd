@@ -8,83 +8,137 @@ var items: Dictionary = {}
 
 var slots: Array = []
 
-func add_item(item_data: ItemData, quantity_to_add: int = 1):
-	if not is_instance_valid(item_data):
-		printerr("InventoryManager: Se intentó añadir un ItemData inválido")
-		return quantity_to_add
-		
-	var remaining_quantity = quantity_to_add
-	print("Intentando añadir ", remaining_quantity, " de ", item_data.item_name)
+var log_category: String = "INVENTORY_MANAGER"
+
+func add_item(item: Item, quantity: int = 1):
+	if not is_instance_valid(item):
+		Logger.error(log_category, "Se intento añadir un 'Item' inválido", self)
+		return quantity
+	
+	if not quantity > 0:
+		Logger.warn(log_category, "Se intento añadir cantidad 0  o negativa de " + str(item.name), self)
+		return 0
+	
+	var remaining = quantity
+	var quantity_added = 0
+	Logger.info(log_category, "Intentando añadir " + str(remaining) + " de " + str(item.name), self)
 	
 	for i in range(slots.size()):
-		if remaining_quantity <= 0: break
+		if remaining <= 0:
+			break
 		
 		var current_slot = slots[i]
-		if current_slot != null and current_slot["item"] == item_data and current_slot["quantity"] < item_data.stack_size:
-			var space_available = item_data.stack_size - current_slot["quantity"]
-			var amount_to_add_here = min(remaining_quantity, space_available)
+		
+		if current_slot == null:
+			continue
+		
+		if not current_slot["item"] == item:
+			continue
 			
-			current_slot["quantity"] += amount_to_add_here
-			remaining_quantity -= amount_to_add_here
-			print(" Añadido ", amount_to_add_here, " a slot existente ", i, ". Retsnate: ", remaining_quantity)
+		if current_slot["quantity"] >= item.stack_max:
+			continue
+		
+		var space_available = item.stack_max - current_slot["quantity"]
+		var amount_to_add = min(remaining, space_available)
+			
+		current_slot["quantity"] += amount_to_add
+		remaining -= amount_to_add
+		quantity_added += amount_to_add
+		Logger.debug(log_category, "Añadiendo " + str(amount_to_add) + " a slot existente " + str(i) + ". Restante: " + str(remaining))
 	
-	if remaining_quantity > 0:
+	# Slots vacios
+	if remaining > 0:
+		Logger.debug(log_category, "Items restantes (" + str(remaining) + "), buscando slots vacíos.", self)
 		for i in range(slots.size()):
-			if remaining_quantity <= 0: break
+			if remaining <= 0:
+				break
 				
 			if slots[i] == null:
-				var amount_to_add_here = min(remaining_quantity, item_data.stack_size)
-					
-				slots[i] = {"item": item_data, "quantity": amount_to_add_here}
-				remaining_quantity -= amount_to_add_here
-				print(" Creado nuevo stack en slot vacío ", i, " con ", amount_to_add_here, ". Restante: ", remaining_quantity)
-					
-	inventory_changed.emit()
-	if remaining_quantity > 0:
-		print("Inventario lleno. No se puedieron añadir ", remaining_quantity, " de ", item_data.item_name)
+				var amount_to_add = min(remaining, item.stack_max)
+				slots[i] = {"item": item, "quantity": amount_to_add}
+				remaining -= amount_to_add
+				quantity_added += amount_to_add
+				Logger.debug(log_category, "Creando nuevo stack en slot vacío [" + str(i) + "] con " + str(amount_to_add) + ". Restante: " + str(remaining), self)
+	
+	if  quantity_added > 0:
+		Logger.debug(log_category, "Emitiendo señal 'inventory_changed'.", self)
+		inventory_changed.emit()
 		
-	return remaining_quantity
+	if remaining > 0:
+		Logger.warn(log_category, "Inventario lleno. No se pudieron añadir " + str(remaining) + " de " + str(item.name), self)
 	
-	
+	return remaining
 	
 func get_items() -> Dictionary:
 	return items
 	
-func get_slots_data() -> Array:
+func get_slots() -> Array:
 	return slots
 	
-func remove_item_from_slot(slot_index: int, quantity_to_remove: int = 1):
-	if slot_index < 0 or slot_index >= slots.size() or slots[slot_index] == null:
-		printerr("Intento de quitar ítem de slot inválido o vacío: ", slot_index)
+func remove_item_from_slot(slot_idx: int, quantity: int = 1):
+	if not quantity > 0:
+		Logger.warn(log_category, "Intento de quitar cantidad <= 0 (" + str(quantity) + ") del slot [" + str(slot_idx) + "].", self)
+		return
+	
+	if slot_idx < 0 or slot_idx >= slots.size():
+		Logger.error(log_category, "Intento de quitar item de slot con índice fuera de rango: " + str(slot_idx), self)
 		return
 		
-	slots[slot_index]["quantity"] -= quantity_to_remove
-	if slots[slot_index]["quantity"] <= 0:
-		slots[slot_index] = null
+	if slots[slot_idx] == null:
+		Logger.warn(log_category, "Intento de quitar ítem de slot que ya está vacío: " + str(slot_idx), self)
+		return
 		
+	var curr_quantity = slots[slot_idx]["quantity"]
+	var item_name = "Unknown Item"
+	if is_instance_valid(slots[slot_idx]["item"]):
+		item_name = slots[slot_idx]["item"].name
+		
+	var curr_quantity_to_remove = min(quantity, curr_quantity)
+	
+	Logger.debug(log_category, "Quitando " + str(curr_quantity_to_remove) + " de '" + item_name + "' del slot [" + str(slot_idx) + "]. (Cantidad original: " + str(curr_quantity) + ", Pedido: " + str(quantity) + ")", self)
+	
+	slots[slot_idx]["quantity"] -= curr_quantity_to_remove
+	if slots[slot_idx]["quantity"] <= 0:
+		Logger.info(log_category, "Slot [" + str(slot_idx) + "] vaciado (era " + item_name + ").", self)
+		slots[slot_idx] = null
+	else:
+		Logger.debug(log_category, "Slot [" + str(slot_idx) + "] nueva cantidad para '" + item_name + "': " + str(slots[slot_idx]["quantity"]), self)
+	
+	Logger.debug(log_category, "Emitiendo inventory_changed después de remove_item_from_slot.", self)
 	inventory_changed.emit()
+	return curr_quantity_to_remove
 	
 func _ready():
 	slots.resize(max_slots)
-	print("InventoryManager listo con ", max_slots, " slots.")
-	var test = load("res://data/resources/items/item1.tres")
-	
-	if test:
-		add_item(test, 0)
 
 func move_or_swap_item_in_slots(from_idx: int, to_idx: int):
-	if from_idx < 0 or from_idx >= slots.size() or to_idx < 0 or to_idx >= slots.size() or from_idx == to_idx:
-		printerr("InventoryManager: Índices de slot inválidos para mover/intercambiar: from ", from_idx, " to ", to_idx)
+	if from_idx == to_idx:
+		Logger.debug(log_category, "Intento de mover/intercambiar un slot consigo mismo (índice " + str(from_idx) + ").", self)
+		return
+		
+	if from_idx < 0 or from_idx >= slots.size():
+		Logger.error(log_category, "Índice 'from_idx' inválido (" + str(from_idx) + ") para mover/intercambiar.", self)
+		return
+		
+	if to_idx < 0 or to_idx >= slots.size():
+		Logger.error(log_category, "Índice 'to_idx' inválido (" + str(to_idx) + ") para mover/intercambiar.", self)
 		return
 		
 	if slots[from_idx] == null:
-		printerr("InventoryManager: Intento de mover desde un slot origen vacío: ", from_idx)
+		Logger.warn(log_category, "Intento de mover/intercambiar desde un slot origen vacío: " + str(from_idx), self)
 		return
+		
+	var item_name_from = slots[from_idx]["item"].name
+	var item_name_to = "Vacío"
 	
-	print("InventoryManager: Intercambiando contenido del slot [", from_idx, "] con el slot [", to_idx, "]")
+	if is_instance_valid(slots[to_idx]) and is_instance_valid(slots[to_idx]["item"]):
+		item_name_to = slots[to_idx]["item"].name
+		
+	Logger.info(log_category, "Intercambiando slot [" + str(from_idx) + "] ('" + item_name_from + "') con slot [" + str(to_idx) + "] ('" + item_name_to + "')", self)
 	
-	var temp_item_at_target = slots[to_idx]
+	var temp = slots[to_idx]
 	slots[to_idx] = slots[from_idx]
-	slots[from_idx] = temp_item_at_target
+	slots[from_idx] = temp
 	
+	Logger.debug(log_category, "Emitiendo inventory_changed después de move_or_swap_item_in_slots.", self)
 	inventory_changed.emit()

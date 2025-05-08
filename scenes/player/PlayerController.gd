@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed: float = 150.0 # píxeles por segundo
+@export var speed: float = 300.0 # píxeles por segundo
 
 @onready var visual_sprite: Sprite2D = $Sprite2D
 @onready var placeholder_color: ColorRect = $VisualPlaceholder
@@ -18,6 +18,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func _ready():
+	Logger.error("PRUEBA", "Mensaje de error", self)
+	Logger.warn("PRUEBA", "Mensaje de prueba", self)
+	Logger.info("PRUEBA", "Mensaje de info", self)
+	Logger.debug("PRUEBA", "Mensaje de debug", self)
 	update_visuals()
 	
 func update_visuals():

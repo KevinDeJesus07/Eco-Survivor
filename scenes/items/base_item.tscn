@@ -1,7 +1,51 @@
-[gd_scene load_steps=3 format=3 uid="uid://bs23a2bbabg8w"]
+[gd_scene load_steps=5 format=3 uid="uid://bs23a2bbabg8w"]
 
 [ext_resource type="PackedScene" uid="uid://dyk5ap54gv66l" path="res://scenes/items/BaseItem.tscn" id="1_mdh7g"]
-[ext_resource type="Resource" uid="uid://brswycd32at28" path="res://data/resources/items/item1.tres" id="2_6al80"]
+[ext_resource type="Texture2D" uid="uid://dg2n5ma1xff5y" path="res://assets/art/sprites/items/Manzana.png" id="2_mdh7g"]
+
+[sub_resource type="GDScript" id="GDScript_6al80"]
+script/source = "@tool
+extends Resource
+
+class_name ItemData # Permite usar 'ItemData' como tipo de variable
+
+@export var item_name: String = \"Unnamed Item\"
+@export var description: String = \"\"
+@export var stack_size: int = 10
+@export var placeholder_color: Color = Color.PURPLE
+@export var texture: Texture2D
+
+@export_group(\"Animación\")
+@export var is_animated: bool = false
+@export var spritesheet: Texture2D = null
+@export var h_frames: int = 1
+@export var v_frames: int = 1
+@export var animation_name: String = \"default\"
+@export var animation_speed: float = 5.0
+@export var animation_loop: bool = true
+
+func _init(p_name := \"Default\", p_color := Color.PURPLE):
+	item_name = p_name
+	placeholder_color = p_color
+
+func _to_string() -> String:
+	return \"ItemData(%s)\" % item_name
+"
+
+[sub_resource type="Resource" id="Resource_lj8e0"]
+script = SubResource("GDScript_6al80")
+item_name = "Item1"
+description = ""
+stack_size = 10
+placeholder_color = Color(0.137255, 1, 0.384314, 1)
+texture = ExtResource("2_mdh7g")
+is_animated = false
+h_frames = 1
+v_frames = 1
+animation_name = "default"
+animation_speed = 5.0
+animation_loop = true
+metadata/_custom_type_script = "uid://38anjej2qlmh"
 
 [node name="BaseItem" instance=ExtResource("1_mdh7g")]
-item = ExtResource("2_6al80")
+item = SubResource("Resource_lj8e0")
