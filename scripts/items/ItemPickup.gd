@@ -4,6 +4,7 @@ extends Area2D
 
 @onready var visual_placeholder: ColorRect = $VisualPlaceholder
 @onready var item_texture_sprite: Sprite2D = $ItemTextureSprite
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready():
 	if not is_instance_valid(item_data):
@@ -23,9 +24,43 @@ func update_visual():
 		visual_placeholder.visible = false
 	if item_texture_sprite:
 		item_texture_sprite.visible = false
-		
+	if animated_sprite:
+		animated_sprite.visible = false
+	
 	if not is_instance_valid(item_data):
 		return
+	
+	if item_data.is_animated and item_data.spritesheet and animated_sprite:
+		var sprite_frames = animated_sprite.sprite_frames
+		if not sprite_frames:
+			sprite_frames = SpriteFrames.new()
+			animated_sprite.sprite_frames = sprite_frames
+		
+		if sprite_frames.has_animation(item_data.animation_name):
+			sprite_frames.clear(item_data.animation_name)
+		
+		sprite_frames.add_animation(item_data.animation_name)
+		sprite_frames.set_animation_loop(item_data.animation_name, item_data.animation_loop)
+		sprite_frames.set_animation_speed(item_data.animation_name, item_data.animation_speed)
+		
+		var tex = item_data.spritesheet
+		var h_frames = item_data.h_frames
+		var v_frames = item_data.v_frames
+		
+		if h_frames <= 0:
+			h_frames = 1
+		if v_frames <= 0:
+			v_frames = 1
+			
+		var frame_width = tex.get_width() / h_frames
+		var frame_height = tex.get_height() / v_frames
+		
+		for y in range(v_frames):
+			for x in range(h_frames):
+				pass
+				#sprite_frames.add_frame(item_data.animation_name, tex, 1.0, Rect2(x * frame_width, y * frame_height, frame_width, frame_height))
+		
+		animated_sprite
 		
 	var item_texture_resource = item_data.texture
 	if item_texture_resource:

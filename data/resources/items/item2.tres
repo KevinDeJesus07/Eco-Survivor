@@ -1,6 +1,8 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://i74tr07lsum5"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://i74tr07lsum5"]
 
 [ext_resource type="Script" uid="uid://38anjej2qlmh" path="res://data/definitions/ItemData.gd" id="1_q4wlx"]
+[ext_resource type="Texture2D" uid="uid://dyhgn7sscf2q2" path="res://assets/art/sprites/items/Strawberry.png" id="2_xnigu"]
+[ext_resource type="Texture2D" uid="uid://cjvoupij8iydk" path="res://icon.svg" id="3_8nlnl"]
 
 [resource]
 script = ExtResource("1_q4wlx")
@@ -8,4 +10,12 @@ item_name = "item2"
 description = ""
 stack_size = 10
 placeholder_color = Color(0.627451, 0.12549, 0.941176, 1)
+texture = ExtResource("3_8nlnl")
+is_animated = true
+spritesheet = ExtResource("2_xnigu")
+h_frames = 17
+v_frames = 1
+animation_name = "default"
+animation_speed = 5.0
+animation_loop = true
 metadata/_custom_type_script = "uid://38anjej2qlmh"
