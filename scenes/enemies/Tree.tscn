@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmmvxo2dxmxq"]
+
+[ext_resource type="PackedScene" uid="uid://div4ycxnpd6nl" path="res://scenes/enemies/BaseEntity.tscn" id="1_nebqw"]
+[ext_resource type="Texture2D" uid="uid://tmplirof6603" path="res://assets/art/sprites/environment/Arbol.png" id="2_4mwud"]
+[ext_resource type="Script" uid="uid://bs004llikakyu" path="res://scripts/entities/Tree.gd" id="2_ky2q4"]
+
+[node name="Tree" instance=ExtResource("1_nebqw")]
+script = ExtResource("2_ky2q4")
+
+[node name="Collider" parent="." index="0"]
+position = Vector2(95, 85)
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2(94, 126)
+scale = Vector2(0.223558, 0.295523)
+texture = ExtResource("2_4mwud")

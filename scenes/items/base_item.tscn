@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bs23a2bbabg8w"]
+[gd_scene load_steps=5 format=3 uid="uid://beny4wpor75lj"]
 
 [ext_resource type="PackedScene" uid="uid://dyk5ap54gv66l" path="res://scenes/items/BaseItem.tscn" id="1_mdh7g"]
 [ext_resource type="Texture2D" uid="uid://dg2n5ma1xff5y" path="res://assets/art/sprites/items/Manzana.png" id="2_mdh7g"]

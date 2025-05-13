@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=4 uid="uid://dvuxylws0ulaq"]
+[gd_scene load_steps=11 format=4 uid="uid://dvuxylws0ulaq"]
 
-[ext_resource type="Script" uid="uid://b2o74erlscffj" path="res://scripts/scenes/MainTestScene.gd" id="1_0y56b"]
+[ext_resource type="Script" uid="uid://b2o74erlscffj" path="res://scenes/main/MainTestScene.gd" id="1_0y56b"]
 [ext_resource type="PackedScene" uid="uid://4crmle28okii" path="res://scenes/player/Player.tscn" id="1_ulelk"]
+[ext_resource type="PackedScene" uid="uid://c7jmefl5bf8mo" path="res://scenes/enemies/EnemyPlaceholder.tscn" id="2_s0hey"]
 [ext_resource type="PackedScene" uid="uid://ovlo83q268bq" path="res://scenes/ui/InventoryUI.tscn" id="4_20vfb"]
 [ext_resource type="Resource" uid="uid://c3chvdl6k4g21" path="res://data/resources/items/Manzana.tres" id="5_2phta"]
 [ext_resource type="PackedScene" uid="uid://bmmvxo2dxmxq" path="res://scenes/enemies/Tree.tscn" id="6_tgr5f"]
@@ -18,8 +19,6 @@ script = ExtResource("1_0y56b")
 [node name="Player" parent="." instance=ExtResource("1_ulelk")]
 z_index = 1
 position = Vector2(576, 325)
-motion_mode = 1
-speed = 300.0
 
 [node name="InventoryLayer" type="CanvasLayer" parent="."]
 
@@ -91,21 +90,24 @@ item = ExtResource("5_2phta")
 
 [node name="Enemies" type="Node2D" parent="."]
 
+[node name="EnemyPlaceholder" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(936, 522)
+
+[node name="EnemyPlaceholder2" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(189, 523)
+
+[node name="EnemyPlaceholder3" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(566, 525)
+
+[node name="EnemyPlaceholder4" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(757, 523)
+
+[node name="EnemyPlaceholder5" parent="Enemies" instance=ExtResource("2_s0hey")]
+position = Vector2(371, 526)
+
 [node name="Tree" parent="Enemies" instance=ExtResource("6_tgr5f")]
-position = Vector2(73, 405)
-motion_mode = 1
-
-[node name="Tree2" parent="Enemies" instance=ExtResource("6_tgr5f")]
-position = Vector2(842, 398)
-motion_mode = 1
-
-[node name="Tree3" parent="Enemies" instance=ExtResource("6_tgr5f")]
-position = Vector2(586, 401)
-motion_mode = 1
-
-[node name="Tree4" parent="Enemies" instance=ExtResource("6_tgr5f")]
-position = Vector2(323, 401)
-motion_mode = 1
+position = Vector2(213, 150)
+patrol_range = 1000.0
 
 [node name="Limites" type="StaticBody2D" parent="."]
 
@@ -128,7 +130,6 @@ position = Vector2(1323, 329)
 shape = SubResource("RectangleShape2D_vup0r")
 
 [node name="Map" type="Node2D" parent="."]
-z_index = -5
 
 [node name="Mar" type="TileMapLayer" parent="Map"]
 z_index = -1
