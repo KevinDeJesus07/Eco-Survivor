@@ -17,7 +17,7 @@ script = ExtResource("1_0y56b")
 
 [node name="Player" parent="." instance=ExtResource("1_ulelk")]
 z_index = 1
-position = Vector2(576, 325)
+position = Vector2(579, 217)
 motion_mode = 1
 speed = 300.0
 
@@ -92,19 +92,19 @@ item = ExtResource("5_2phta")
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Tree" parent="Enemies" instance=ExtResource("6_tgr5f")]
-position = Vector2(73, 405)
+position = Vector2(73, 352)
 motion_mode = 1
 
 [node name="Tree2" parent="Enemies" instance=ExtResource("6_tgr5f")]
-position = Vector2(842, 398)
+position = Vector2(840, 351)
 motion_mode = 1
 
 [node name="Tree3" parent="Enemies" instance=ExtResource("6_tgr5f")]
-position = Vector2(586, 401)
+position = Vector2(586, 356)
 motion_mode = 1
 
 [node name="Tree4" parent="Enemies" instance=ExtResource("6_tgr5f")]
-position = Vector2(323, 401)
+position = Vector2(323, 356)
 motion_mode = 1
 
 [node name="Limites" type="StaticBody2D" parent="."]
