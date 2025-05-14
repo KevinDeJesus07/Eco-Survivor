@@ -9,6 +9,9 @@ var curr_filter: FilterMode = FilterMode.MINIMUM
 var curr_level: Level = Level.DEBUG
 var en_categories = {"INVENTORY": true, "PLAYER": true, "ENEMY": false}
 
+func _ready():
+	set_filter_to_exact(Level.PRIORITY)
+
 func _log(level: Level, category: String, message: String, ctx_node: Node = null):
 	var should_log_by_level: bool = false
 	

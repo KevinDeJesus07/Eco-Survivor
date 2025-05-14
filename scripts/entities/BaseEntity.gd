@@ -130,6 +130,7 @@ func _enter_dying_state():
 	stuck_timer.stop()
 	pass
 
+## hola
 func _state_idle(delta: float):
 	pass
 	
