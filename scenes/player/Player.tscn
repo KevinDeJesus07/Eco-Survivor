@@ -1,23 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://4crmle28okii"]
+[gd_scene load_steps=5 format=3 uid="uid://4crmle28okii"]
 
 [ext_resource type="Script" uid="uid://dquxulnq5yjc7" path="res://scripts/player/Player.gd" id="1_wr5hl"]
+[ext_resource type="PackedScene" uid="uid://dpyitlqcf05bu" path="res://scenes/ui/EntityHUD.tscn" id="2_4kuee"]
 [ext_resource type="SpriteFrames" uid="uid://qnfv0k5yvtqw" path="res://assets/art/Player.tres" id="3_4kuee"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8nba"]
 size = Vector2(43, 61)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_layer = 2
+collision_mask = 13
 script = ExtResource("1_wr5hl")
+hud = ExtResource("2_4kuee")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
-position = Vector2(30.5, 25.5)
 shape = SubResource("RectangleShape2D_o8nba")
 
 [node name="Camera" type="Camera2D" parent="."]
 position_smoothing_enabled = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(29, 26.5)
+position = Vector2(0, 3.8147e-06)
 scale = Vector2(2.83333, 2.23438)
 sprite_frames = ExtResource("3_4kuee")
-animation = &"walk_down_right"
+animation = &"idle_up"

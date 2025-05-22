@@ -6,6 +6,8 @@
 size = Vector2(32, 32)
 
 [node name="BaseItem" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
 script = ExtResource("1_c0hkm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

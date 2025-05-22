@@ -3,7 +3,7 @@ extends BaseEntity
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var placeholder: ColorRect = $VisualPlaceholder
 
-var facing_dir: Vector2 = Vector2.DOWN
+# var facing_dir: Vector2 = Vector2.DOWN
 
 func _ready():
 	super._ready() 

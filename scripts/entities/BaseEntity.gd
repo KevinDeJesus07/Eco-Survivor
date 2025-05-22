@@ -5,6 +5,7 @@ class_name BaseEntity
 const LOG_CAT: String = "BASE_ENTITY" 
 
 @export_group("Base Stats")
+@export var display_name: String = "default"
 @export var max_hp: int = 100
 @export var speed: float = 75.0
 
@@ -23,14 +24,18 @@ const LOG_CAT: String = "BASE_ENTITY"
 @export var patrol_rect_min_offset: Vector2 = Vector2(-100, -50) # Relativo al centro del área de patrulla
 @export var patrol_rect_max_offset: Vector2 = Vector2(100, 50)  # Relativo al centro del área de patrulla
 
+@export var hud: PackedScene
+var hud_instance: Control = null
+
 var hp: int
 var initial_pos: Vector2     # Posición donde la entidad "nació" o su punto de anclaje
-var patrol_area_center: Vector2   # Centro real del área de patrulla calculado
+var patrol_area_center: Vector2   # Centro real del área "res://scenes/ui/EntityHUD.tscn"de patrulla calculado
 var curr_patrol_target: Vector2 # El punto específico al que se dirige al patrullar
 
 enum State { IDLE, PATROLLING, CHASING, ATTACKING, DYING }
 var current_state: State = State.IDLE 
-var prev_state: State                 
+var prev_state: State
+var facing_dir: Vector2 = Vector2.DOWN                 
 var idle_timer: Timer
 var stuck_timer: Timer
 
@@ -55,7 +60,17 @@ func _ready():
 	stuck_timer.one_shot = true
 	stuck_timer.timeout.connect(_on_stuck_timer_timeout)
 	
-	Logger.priority(LOG_CAT, "'%s' ready. HP: %d/%d. Can Patrol: %s" % [name, hp, max_hp, can_patrol], self)
+	Logger.debug(LOG_CAT, "'%s' ready. HP: %d/%d. Can Patrol: %s" % [name, hp, max_hp, can_patrol], self)
+
+	if is_instance_valid(hud):
+		hud_instance = hud.instantiate()
+		add_child(hud_instance)
+		hud_instance.position.y = -100
+		hud_instance.position.x = -70
+		if hud_instance.has_method("initialize_hud"):
+			hud_instance.initialize_hud(self)
+	else:
+		Logger.warn(LOG_CAT, "hud no asignado para " + str(name), self)
 
 	_execute_enter_state_logic(current_state)
 
@@ -70,10 +85,10 @@ func _physics_process(delta: float):
 
 func _change_state(new_state: State):
 	if new_state == current_state:
-		Logger.priority(LOG_CAT, "'%s' intentando cambiar al mismo estado: %s." % [name, State.keys()[current_state]], self)
+		Logger.debug(LOG_CAT, "'%s' intentando cambiar al mismo estado: %s." % [name, State.keys()[current_state]], self)
 		return
 		
-	Logger.priority(LOG_CAT, "'%s' cambiando estado de '%s' a '%s'" % [name, State.keys()[current_state], State.keys()[new_state]], self)
+	Logger.debug(LOG_CAT, "'%s' cambiando estado de '%s' a '%s'" % [name, State.keys()[current_state], State.keys()[new_state]], self)
 	
 	# Lógica de "salida" del estado actual
 	# _execute_exit_state_logic(current_state) 
@@ -84,7 +99,7 @@ func _change_state(new_state: State):
 	_execute_enter_state_logic(new_state)
 
 func _execute_enter_state_logic(state_to_enter: State):
-	Logger.priority(LOG_CAT, "'%s' ejecutando lógica de entrada para estado: %s" % [name, State.keys()[state_to_enter]], self)
+	Logger.debug(LOG_CAT, "'%s' ejecutando lógica de entrada para estado: %s" % [name, State.keys()[state_to_enter]], self)
 	match state_to_enter:
 		State.IDLE:       _enter_idle_state()
 		State.PATROLLING: _enter_patrolling_state()
@@ -93,14 +108,14 @@ func _execute_enter_state_logic(state_to_enter: State):
 		State.DYING:      _enter_dying_state()
 
 func _enter_idle_state():
-	Logger.priority(LOG_CAT, "'%s' (Base) entrando a IDLE." % name, self)
+	Logger.debug(LOG_CAT, "'%s' (Base) entrando a IDLE." % name, self)
 	velocity = Vector2.ZERO
 	stuck_timer.stop() 
 	if can_patrol and is_instance_valid(idle_timer): 
 		idle_timer.start()
 
 func _enter_patrolling_state():
-	Logger.priority(LOG_CAT, "'%s' (Base) entrando a PATROLLING." % name, self)
+	Logger.debug(LOG_CAT, "'%s' (Base) entrando a PATROLLING." % name, self)
 	stuck_timer.stop() 
 	_set_new_patrol_target()
 	if curr_patrol_target != global_position and is_instance_valid(stuck_timer): 
@@ -110,24 +125,26 @@ func _enter_patrolling_state():
 		_change_state(State.IDLE) # Evita quedarse atascado si no hay a dónde ir
 
 func _enter_chasing_state():
-	Logger.priority(LOG_CAT, "'%s' (Base) entrando a CHASING." % name, self)
+	Logger.debug(LOG_CAT, "'%s' (Base) entrando a CHASING." % name, self)
 	# Lógica base para CHASING (ej. detener otros timers)
 	idle_timer.stop()
 	stuck_timer.stop()
 	pass
 
 func _enter_attacking_state():
-	Logger.priority(LOG_CAT, "'%s' (Base) entrando a ATTACKING." % name, self)
+	Logger.debug(LOG_CAT, "'%s' (Base) entrando a ATTACKING." % name, self)
 	velocity = Vector2.ZERO 
 	idle_timer.stop()
 	stuck_timer.stop()
 	pass
 	
 func _enter_dying_state():
-	Logger.priority(LOG_CAT, "'%s' (Base) entrando a DYING." % name, self)
+	Logger.debug(LOG_CAT, "'%s' (Base) entrando a DYING." % name, self)
 	velocity = Vector2.ZERO
 	idle_timer.stop()
 	stuck_timer.stop()
+	if is_instance_valid(hud_instance):
+		hud_instance.visible = false
 	pass
 
 ## hola
@@ -144,7 +161,7 @@ func _state_patrolling(delta: float):
 	if global_position.distance_to(curr_patrol_target) > 5.0: 
 		velocity = direction_to_target * speed
 	else: 
-		Logger.priority(LOG_CAT, "'%s' llegó a destino de patrulla. Entrando a IDLE." % name, self)
+		Logger.debug(LOG_CAT, "'%s' llegó a destino de patrulla. Entrando a IDLE." % name, self)
 		_change_state(State.IDLE)
 
 func _state_chasing(delta: float):
@@ -178,7 +195,7 @@ func _set_new_patrol_target():
 
 func _on_idle_timer_timeout():
 	if current_state == State.IDLE and can_patrol:
-		Logger.priority(LOG_CAT, "'%s' terminó tiempo en IDLE. Volviendo a PATROLLING." % name, self)
+		Logger.debug(LOG_CAT, "'%s' terminó tiempo en IDLE. Volviendo a PATROLLING." % name, self)
 		_change_state(State.PATROLLING)
 
 func _on_stuck_timer_timeout():
@@ -191,7 +208,10 @@ func take_damage(amount: int):
 		return
 		
 	hp -= amount
-	Logger.priority(LOG_CAT, "'%s' recibió %d de daño. HP: %d/%d" % [name, amount, hp, max_hp], self)
+	Logger.debug(LOG_CAT, "'%s' recibió %d de daño. HP: %d/%d" % [name, amount, hp, max_hp], self)
+	
+	if is_instance_valid(hud_instance) and hud_instance.has_method("update_health"):
+		hud_instance.update_health(hp)
 	
 	if hp <= 0:
 		hp = 0 
