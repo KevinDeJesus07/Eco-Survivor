@@ -1,0 +1,140 @@
+[gd_scene load_steps=21 format=3 uid="uid://bmmvxo2dxmxq"]
+
+[ext_resource type="PackedScene" uid="uid://div4ycxnpd6nl" path="res://scenes/enemies/BaseEntity.tscn" id="1_nebqw"]
+[ext_resource type="Script" uid="uid://bs004llikakyu" path="res://scripts/entities/Tree.gd" id="2_ky2q4"]
+[ext_resource type="Texture2D" uid="uid://4eaoh6s14rki" path="res://assets/art/sprites/environment/AnimatedAutum.png" id="3_ky2q4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63kia"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kki4v"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hlon3"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ohm0"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tu6mf"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1gdp"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wg1d"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r11we"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3h5q"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mysgo"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2poao"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hiqs1"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpjcn"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(768, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq0n0"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(832, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h7md"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(896, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2by2"]
+atlas = ExtResource("3_ky2q4")
+region = Rect2(960, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tgl6v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63kia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kki4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hlon3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ohm0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tu6mf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1gdp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wg1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r11we")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3h5q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mysgo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2poao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hiqs1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpjcn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aq0n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h7md")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2by2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Tree" instance=ExtResource("1_nebqw")]
+script = ExtResource("2_ky2q4")
+
+[node name="Collider" parent="." index="0"]
+position = Vector2(131.5, 109)
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2(94, 126)
+scale = Vector2(0.223558, 0.295523)
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." index="2"]
+position = Vector2(130, 107.5)
+scale = Vector2(3.34375, 3.32813)
+sprite_frames = SubResource("SpriteFrames_tgl6v")

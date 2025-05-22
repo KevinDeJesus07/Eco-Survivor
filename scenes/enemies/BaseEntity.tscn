@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://div4ycxnpd6nl"]
+
+[ext_resource type="Script" uid="uid://by335srsr5aug" path="res://scripts/entities/BaseEntity.gd" id="1_0hb3h"]
+[ext_resource type="PackedScene" uid="uid://dpyitlqcf05bu" path="res://scenes/ui/EntityHUD.tscn" id="2_k0wee"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5r0v1"]
+size = Vector2(139, 214)
+
+[node name="BaseEntity" type="CharacterBody2D"]
+script = ExtResource("1_0hb3h")
+hud = ExtResource("2_k0wee")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5r0v1")
+
+[node name="Sprite" type="Sprite2D" parent="."]
