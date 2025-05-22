@@ -2,6 +2,7 @@ extends Control
 
 @onready var name_label: Label = $Name
 @onready var health: ProgressBar = $Health
+@onready var health_text: Label = $Health/HealthText
 
 const LOG_CAT: String = "ENTITY_HUD"
 
@@ -29,6 +30,8 @@ func initialize_hud(owner: BaseEntity):
 	if is_instance_valid(health):
 		health.max_value = owner.max_hp
 		health.value = owner.hp
+		if is_instance_valid(health_text):
+			health_text.text = str(owner.hp)
 		
 	visible = true
 	Logger.priority(LOG_CAT, "HUD inicializado para: " + str(owner.name), self)
@@ -36,5 +39,7 @@ func initialize_hud(owner: BaseEntity):
 func update_health(new_hp: int):
 	if is_instance_valid(health):
 		health.value = new_hp
+		if is_instance_valid(health_text):
+			health_text.text = str(new_hp)
 	else:
 		Logger.priority(LOG_CAT, "Instancia no válida de Health", self)

@@ -62,6 +62,7 @@ func _ready():
 	
 	Logger.debug(LOG_CAT, "'%s' ready. HP: %d/%d. Can Patrol: %s" % [name, hp, max_hp, can_patrol], self)
 
+
 	if is_instance_valid(hud):
 		hud_instance = hud.instantiate()
 		add_child(hud_instance)

@@ -2,9 +2,15 @@ extends BaseEntity
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var placeholder: ColorRect = $VisualPlaceholder
-
+@onready var hud2: Control = null
 # var facing_dir: Vector2 = Vector2.DOWN
 
+func _process(delta: float) -> void:
+	if hud2 and get_viewport():
+		var camera := get_viewport().get_camera_2d()
+		if camera:
+			var screen_pos = camera.unproject_position(global_position)
+			hud2.global_position = screen_pos + Vector2(-100, -70)
 func _ready():
 	super._ready() 
 	can_patrol = false 
