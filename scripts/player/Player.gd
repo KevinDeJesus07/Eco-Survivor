@@ -115,3 +115,26 @@ func _state_attacking(delta: float):
 func _state_dying(delta: float):
 	Logger.info(LOG_CAT, "'%s' (Player) está en estado DYING." % name, self)
 	pass
+	
+func _enter_dying_state():
+	super._enter_dying_state()
+	set_collision_layer_value(2, false)
+	set_collision_mask_value(1, false)
+	set_collision_mask_value(3, false)
+	set_collision_mask_value(4, false)
+	var base_dir = _get_base_animation_name_from_direction()
+	var anim_to_play = "death_" + base_dir
+	if not is_instance_valid(sprite) or not sprite.sprite_frames:
+		queue_free()
+		return
+	
+	if sprite.sprite_frames.has_animation(anim_to_play):
+		sprite.play(anim_to_play)
+		if not sprite.is_connected("animation_finished", Callable(self, "_on_death_animation_finished")):
+			sprite.animation_finished.connect(Callable(self, "_on_death_animation_finished"))
+	elif sprite.sprite_frames.has_animation("death_down"):
+		sprite.play("death_down")
+		if not sprite.is_connected("animation_finished", Callable(self, "_on_death_animation_finished")):
+			sprite.animation_finished.connect(Callable(self, "_on_death_animation_finished"))
+	else:
+		queue_free()
