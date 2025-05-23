@@ -759,7 +759,6 @@ attack_cooldown_time = 1.5
 attack_expansion_speed = 77.0
 attack_max_radius = 110.0
 attack_start_radius = 20.0
-hud = null
 
 [node name="Collider" parent="." index="0"]
 position = Vector2(-1, -1)

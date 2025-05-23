@@ -21,6 +21,8 @@ var attack_current_radius: float = 0.0
 var is_attack_expanding: bool = false
 var attack_hit_applied: bool = false
 
+const LEASH_MARGIN := 32
+
 func _ready():
 	super._ready()
 	
@@ -103,31 +105,43 @@ func _enter_dying_state():
 
 func _state_idle(delta: float):
 	_update_animation()
+	
+	if is_instance_valid(target_player):
+		if player_detection_area.overlaps_body(target_player):
+			_change_state(State.CHASING)
+		else:
+			target_player = null
 
 func _state_patrolling(delta: float):
 	super._state_patrolling(delta)
 	_update_animation()
+	
+	if is_instance_valid(target_player):
+		if player_detection_area.overlaps_body(target_player):
+			_change_state(State.CHASING)
+		else:
+			target_player = null
 
+			
 func _state_chasing(delta: float):
 	if not is_instance_valid(target_player):
 		_change_state(State.PATROLLING)
 		return
 
-	if global_position.distance_to(initial_pos) > leash_radius:
+	if not player_detection_area.overlaps_body(target_player):
 		target_player = null
 		_change_state(State.PATROLLING)
 		return
 
-	var direction = global_position.direction_to(target_player.global_position)
-	velocity = direction * speed
+	var distance_to_center = global_position.distance_to(initial_pos)
+	if distance_to_center > leash_radius:
+		var direction_to_center = (initial_pos - global_position).normalized()
+		velocity = direction_to_center * speed
+	else:
+		var direction = (target_player.global_position - global_position).normalized()
+		velocity = direction * speed
 
-	if velocity.length_squared() > 0.01:
-		facing_dir = velocity.normalized()
-	_update_animation()
 
-	var dist_to_player = global_position.distance_to(target_player.global_position)
-	if dist_to_player <= attack_range and attack_cooldown_timer.is_stopped():
-		_change_state(State.ATTACKING)
 
 func _state_attacking(delta: float):
 	super._state_attacking(delta)
@@ -235,7 +249,7 @@ func _decide_next_state_after_cooldown_starts():
 func _on_player_detection_area_body_entered(body):
 	if body.is_in_group("Player"):
 		target_player = body as CharacterBody2D
-		if current_state not in [State.ATTACKING, State.DYING]:
+		if current_state in [State.IDLE, State.PATROLLING, State.CHASING]:
 			_change_state(State.CHASING)
 
 func _on_player_detection_area_body_exited(body):

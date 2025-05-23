@@ -92,7 +92,7 @@ func _change_state(new_state: State):
 	Logger.debug(LOG_CAT, "'%s' cambiando estado de '%s' a '%s'" % [name, State.keys()[current_state], State.keys()[new_state]], self)
 	
 	# Lógica de "salida" del estado actual
-	# _execute_exit_state_logic(current_state) 
+	#_execute_exit_state_logic(current_state) 
 	
 	prev_state = current_state
 	current_state = new_state

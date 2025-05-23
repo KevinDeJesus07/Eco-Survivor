@@ -52,4 +52,7 @@ offset_right = 548.5
 offset_bottom = 243.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_4kuee")
 
+[node name="HealthText" parent="EntityHUD/Health" index="0"]
+layout_mode = 0
+
 [editable path="EntityHUD"]
