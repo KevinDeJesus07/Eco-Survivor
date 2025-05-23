@@ -1,14 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://4crmle28okii"]
+[gd_scene load_steps=5 format=3 uid="uid://4crmle28okii"]
 
 [ext_resource type="Script" uid="uid://dquxulnq5yjc7" path="res://scripts/player/Player.gd" id="1_wr5hl"]
-[ext_resource type="PackedScene" uid="uid://dpyitlqcf05bu" path="res://scenes/ui/EntityHUD.tscn" id="2_4kuee"]
+[ext_resource type="PackedScene" uid="uid://gaj3apuy1seo" path="res://scenes/ui/PlayerHUD.tscn" id="2_4kuee"]
 [ext_resource type="SpriteFrames" uid="uid://qnfv0k5yvtqw" path="res://assets/art/Player.tres" id="3_4kuee"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8nba"]
 size = Vector2(43, 61)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kuee"]
-bg_color = Color(0.341176, 1, 0.364706, 1)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
@@ -27,35 +24,3 @@ position = Vector2(0, 3.8147e-06)
 scale = Vector2(2.83333, 2.23438)
 sprite_frames = ExtResource("3_4kuee")
 animation = &"idle_up"
-
-[node name="EntityHUD" parent="." instance=ExtResource("2_4kuee")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = -498.0
-offset_top = -285.0
-offset_right = -498.0
-offset_bottom = -285.0
-grow_horizontal = 1
-grow_vertical = 1
-
-[node name="Name" parent="EntityHUD" index="0"]
-offset_left = 450.0
-offset_top = 189.0
-offset_right = 550.0
-offset_bottom = 213.0
-
-[node name="Health" parent="EntityHUD" index="1"]
-offset_left = 453.5
-offset_top = 222.0
-offset_right = 548.5
-offset_bottom = 243.0
-theme_override_styles/fill = SubResource("StyleBoxFlat_4kuee")
-
-[node name="HealthText" parent="EntityHUD/Health" index="0"]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 51.0
-offset_bottom = 35.0
-
-[editable path="EntityHUD"]

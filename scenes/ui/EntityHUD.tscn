@@ -30,18 +30,4 @@ offset_top = 39.0
 offset_right = 121.0
 offset_bottom = 60.0
 value = 50.0
-rounded = true
 show_percentage = false
-
-[node name="HealthText" type="Label" parent="Health"]
-layout_mode = 0
-offset_left = 17.0
-offset_top = -5.0
-offset_right = 68.0
-offset_bottom = 30.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-theme_override_font_sizes/font_size = 18
-horizontal_alignment = 1
-vertical_alignment = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://da4u30akwg6m1"]
+[gd_scene load_steps=3 format=3 uid="uid://gaj3apuy1seo"]
 
 [ext_resource type="Script" uid="uid://b1335i150ei1b" path="res://scenes/ui/EntityHUD.gd" id="1_ivdol"]
 

@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://div4ycxnpd6nl" path="res://scenes/enemies/BaseEntity.tscn" id="1_qf73r"]
 [ext_resource type="Texture2D" uid="uid://cns1oxxlj21ts" path="res://assets/art/sprites/enemies/Slime1_Idle_full.png" id="2_qfcr1"]
 [ext_resource type="Script" uid="uid://blrcp7vbh6mvy" path="res://scenes/enemies/Slime.gd" id="2_uxl5r"]
-[ext_resource type="PackedScene" uid="uid://uc148off7a57" path="res://scenes/ui/EnemyHUD.tscn" id="3_kvn5r"]
+[ext_resource type="PackedScene" uid="uid://c0itb70bp001" path="res://scenes/ui/EnemyHUD.tscn" id="3_kvn5r"]
 [ext_resource type="Texture2D" uid="uid://bajup7uj1f36m" path="res://assets/art/sprites/enemies/Slime1_Attack_full.png" id="3_u7i6e"]
 [ext_resource type="Texture2D" uid="uid://dqw7uo238osre" path="res://assets/art/sprites/enemies/Slime1_Walk_full.png" id="4_u7i6e"]
 
@@ -762,6 +762,8 @@ patience_recovery_rate = 0.5
 attack_expansion_speed = 77.0
 attack_max_radius = 110.0
 attack_start_radius = 20.0
+display_name = "Slime"
+max_hp = 10
 hud = ExtResource("3_kvn5r")
 
 [node name="Collider" parent="." index="0"]
