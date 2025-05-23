@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://clg2skee241j6" path="res://scenes/systems/Spawner.gd" id="1_5p3ar"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5mjy4"]
-size = Vector2(392, 261)
+size = Vector2(1260, 652.5)
 
 [node name="Spawner" type="Node2D"]
 script = ExtResource("1_5p3ar")
@@ -17,3 +17,4 @@ position = Vector2(186, 120.5)
 shape = SubResource("RectangleShape2D_5mjy4")
 
 [node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 5.0

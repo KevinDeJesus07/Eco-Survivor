@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://dvuxylws0ulaq"]
+[gd_scene load_steps=12 format=4 uid="uid://dvuxylws0ulaq"]
 
 [ext_resource type="Script" uid="uid://b2o74erlscffj" path="res://scripts/scenes/MainTestScene.gd" id="1_0y56b"]
 [ext_resource type="PackedScene" uid="uid://4crmle28okii" path="res://scenes/player/Player.tscn" id="1_ulelk"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cqnnswr08osqi" path="res://scenes/enemies/Slime.tscn" id="7_0y56b"]
 [ext_resource type="PackedScene" uid="uid://dncnng3roqi2o" path="res://scenes/items/Manzana.tscn" id="8_rmuq1"]
 [ext_resource type="TileSet" uid="uid://ds743rs0plb0f" path="res://assets/art/tilesets/mundo.tres" id="9_0y56b"]
-[ext_resource type="PackedScene" uid="uid://uc148off7a57" path="res://scenes/ui/EnemyHUD.tscn" id="9_rmuq1"]
 [ext_resource type="PackedScene" uid="uid://b8f7y22biq1kk" path="res://scenes/systems/Spawner.tscn" id="11_71y11"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vup0r"]
@@ -30,12 +29,6 @@ hud = ExtResource("3_0y56b")
 [node name="EntityHUD" parent="Player" index="3"]
 offset_right = 0.0
 offset_bottom = 0.0
-
-[node name="HealthText" parent="Player/EntityHUD/Health" index="0"]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 51.0
-offset_bottom = 35.0
 
 [node name="InventoryLayer" type="CanvasLayer" parent="."]
 
@@ -138,7 +131,6 @@ motion_mode = 1
 [node name="Slime" parent="Enemies" instance=ExtResource("7_0y56b")]
 position = Vector2(606, 147)
 display_name = "Slime"
-hud = ExtResource("9_rmuq1")
 
 [node name="Limites" type="StaticBody2D" parent="."]
 
@@ -178,5 +170,9 @@ scene_to_spawn = ExtResource("7_0y56b")
 spawn_count = 1
 max_instances_per_spawner = 5
 
+[node name="CollisionShape2D" parent="Spawner/SpawnArea" index="0"]
+position = Vector2(597, 266.75)
+
 [editable path="Player"]
 [editable path="Player/EntityHUD"]
+[editable path="Spawner"]
