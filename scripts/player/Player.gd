@@ -128,13 +128,19 @@ func _enter_dying_state():
 		queue_free()
 		return
 	
+	var anim_exist = true
 	if sprite.sprite_frames.has_animation(anim_to_play):
 		sprite.play(anim_to_play)
-		if not sprite.is_connected("animation_finished", Callable(self, "_on_death_animation_finished")):
-			sprite.animation_finished.connect(Callable(self, "_on_death_animation_finished"))
 	elif sprite.sprite_frames.has_animation("death_down"):
 		sprite.play("death_down")
-		if not sprite.is_connected("animation_finished", Callable(self, "_on_death_animation_finished")):
-			sprite.animation_finished.connect(Callable(self, "_on_death_animation_finished"))
 	else:
+		anim_exist = false
 		queue_free()
+		return
+		
+	await sprite.animation_finished
+	await get_tree().create_timer(3.0).timeout
+		
+	get_tree().change_scene_to_file("res://scenes/main/MainMenu.tscn")
+
+	# Mostrar GameOver
