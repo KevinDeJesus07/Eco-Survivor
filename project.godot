@@ -19,7 +19,14 @@ config/icon="res://icon.svg"
 
 InventoryManager="*res://singletons/InventoryManager.gd"
 Logger="*res://singletons/Logger.gd"
-TimerUIManager="*res://scenes/ui/TimerUI.tscn"
+TimerLogic="*res://TimerLogic.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=4
+window/stretch/mode="canvas_items"
 
 [input]
 

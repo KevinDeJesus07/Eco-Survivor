@@ -11,10 +11,21 @@ func _process(delta: float) -> void:
 		if camera:
 			var screen_pos = camera.unproject_position(global_position)
 			hud2.global_position = screen_pos + Vector2(-100, -70)
+			
 func _ready():
 	super._ready() 
 	can_patrol = false 
 	Logger.info(LOG_CAT, "'%s' (Player) listo y controlado por input." % name, self)
+
+func heal(amount: int):
+	hp += amount
+	if hp > max_hp:
+		hp = max_hp
+		
+	if is_instance_valid(hud_instance) and hud_instance.has_method("update_health"):
+		hud_instance.update_health(hp)
+		
+	Logger.priority(LOG_CAT, "Player curado", self)
 
 func _enter_idle_state():
 	super._enter_idle_state()
@@ -141,6 +152,7 @@ func _enter_dying_state():
 	await sprite.animation_finished
 	await get_tree().create_timer(3.0).timeout
 		
+	TimerLogic.detener_temporizador()
 	get_tree().change_scene_to_file("res://scenes/main/MainMenu.tscn")
 
 	# Mostrar GameOver

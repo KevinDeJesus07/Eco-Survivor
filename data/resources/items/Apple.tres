@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="HealItem" load_steps=3 format=3 uid="uid://cnjkt411h4gg0"]
+
+[ext_resource type="Script" uid="uid://cy1y7dfyl2ope" path="res://scripts/items/HealItem.gd" id="1_k4qr3"]
+[ext_resource type="Texture2D" uid="uid://dg2n5ma1xff5y" path="res://assets/art/sprites/items/Manzana.png" id="1_yglhx"]
+
+[resource]
+script = ExtResource("1_k4qr3")
+heal_amount = 1
+name = "Unnamed item"
+desc = ""
+is_stacked = true
+stack_max = 10
+icono = ExtResource("1_yglhx")
+color = Color(0.627451, 0.12549, 0.941176, 1)
+metadata/_custom_type_script = "uid://cy1y7dfyl2ope"

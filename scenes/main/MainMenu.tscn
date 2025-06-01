@@ -13,21 +13,21 @@ script = ExtResource("1_qi05h")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 414.0
-offset_top = 189.0
-offset_right = 777.0
-offset_bottom = 277.0
-theme_override_font_sizes/font_size = 64
+offset_left = 664.0
+offset_top = 292.0
+offset_right = 1390.0
+offset_bottom = 467.0
+theme_override_font_sizes/font_size = 128
 text = "EcoSurvivor"
 script = ExtResource("1_qi05h")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 512.0
-offset_top = 367.0
-offset_right = 632.0
-offset_bottom = 438.0
-theme_override_font_sizes/font_size = 24
-text = "Jugar"
+offset_left = 889.0
+offset_top = 530.0
+offset_right = 1129.0
+offset_bottom = 670.0
+theme_override_font_sizes/font_size = 48
+text = "Play"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

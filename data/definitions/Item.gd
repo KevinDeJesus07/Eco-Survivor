@@ -12,5 +12,8 @@ class_name Item
 @export var icono: Texture2D = null
 @export var color: Color = Color.PURPLE
 
+func apply_effect(body: Node) -> void:
+	pass
+
 func _to_string() -> String:
 	return "Item(%s)" % name

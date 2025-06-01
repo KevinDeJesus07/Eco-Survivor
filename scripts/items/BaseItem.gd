@@ -31,4 +31,5 @@ func _on_body_entered(body):
 		return
 	
 	Logger.priority("BASE_ITEM", "jugador recogió: " + str(item.name), self)
+	item.apply_effect(body)
 	queue_free() # Destruir item del suelo
