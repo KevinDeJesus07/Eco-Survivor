@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dpyitlqcf05bu"]
 
-[ext_resource type="Script" uid="uid://b1335i150ei1b" path="res://scenes/ui/EntityHUD.gd" id="1_uuv2k"]
+[ext_resource type="Script" uid="uid://b1335i150ei1b" path="res://scripts/ui/EntityHUD.gd" id="1_uuv2k"]
 
 [node name="EntityHUD" type="Control"]
 z_index = 50

@@ -5,6 +5,8 @@ func _ready():
 	pass
 
 func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/main/CharacterSelector.tscn")
+	"""
 	TimerLogic.reiniciar_completamente()
 	TimerLogic.iniciar_temporizador()
 	
@@ -14,4 +16,4 @@ func _on_button_pressed() -> void:
 	
 	if error != OK:
 		Logger.error("MAIN_MENU", "Fallo al cambiar a la escena '" + str(path) + "' Código de error: " + str(error), self)
-		
+	"""

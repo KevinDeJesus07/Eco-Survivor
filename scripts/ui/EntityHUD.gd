@@ -36,6 +36,19 @@ func initialize_hud(owner: BaseEntity):
 	visible = true
 	Logger.priority(LOG_CAT, "HUD inicializado para: " + str(owner.name), self)
 	
+	if owner:
+		owner.connect("display_name_changed", self._on_display_name_changed)
+		update_name(owner.display_name)
+
+func update_name(new_name: String):
+	if is_instance_valid(name_label):
+		name_label.text = new_name
+	Logger.debug(LOG_CAT, "HUD actualizado con nombre: %s" % new_name, self)
+
+# Señal cuando cambia el nombre
+func _on_display_name_changed(new_name):
+	update_name(new_name)
+
 func update_health(new_hp: int):
 	if is_instance_valid(health):
 		health.value = new_hp

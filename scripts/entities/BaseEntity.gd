@@ -5,7 +5,7 @@ class_name BaseEntity
 const LOG_CAT: String = "BASE_ENTITY"
 
 @export_group("Base Stats")
-@export var display_name: String = "default"
+#@export var display_name: String = "default"
 @export var max_hp: int = 100
 @export var speed: float = 75.0
 
@@ -38,6 +38,14 @@ var prev_state: State
 var facing_dir: Vector2 = Vector2.DOWN
 var idle_timer: Timer
 var stuck_timer: Timer
+
+signal display_name_changed(new_name)
+
+var display_name: String = "Entity":
+	set(value):
+		if display_name != value:
+			display_name = value
+			emit_signal("display_name_changed", value)
 
 func _ready():
 	hp = max_hp

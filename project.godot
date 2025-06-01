@@ -19,7 +19,8 @@ config/icon="res://icon.svg"
 
 InventoryManager="*res://singletons/InventoryManager.gd"
 Logger="*res://singletons/Logger.gd"
-TimerLogic="*res://TimerLogic.gd"
+TimerLogic="*res://singletons/TimerLogic.gd"
+GameManager="*res://singletons/GameManager.gd"
 
 [display]
 

@@ -1,0 +1,32 @@
+extends Node
+
+var player_gender: String = "male"
+
+var player_node: Node = null
+
+signal player_name_changed(new_name)
+
+var player_name: String = "Kevin":
+	set(value):
+		if value != player_name:
+			player_name = value
+			emit_signal("player_name_changed", value)  # Emitir señal al cambiar
+
+func _ready():
+	load_data()
+
+func save_data():
+	var data = {
+		"gender": player_gender,
+		"display_name": player_name
+	}
+	var file = FileAccess.open("user://savegame.dat", FileAccess.WRITE)
+	file.store_var(data)
+
+func load_data():
+	if FileAccess.file_exists("user://savegame.dat"):
+		var file = FileAccess.open("user://savegame.dat", FileAccess.READ)
+		var data = file.get_var()
+		player_gender = data.get("gender", "male")
+		player_name = data.get("display_name", "Player")
+		

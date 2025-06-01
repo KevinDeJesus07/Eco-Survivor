@@ -1,0 +1,234 @@
+[gd_scene load_steps=22 format=3 uid="uid://blc1hfy7rqivp"]
+
+[ext_resource type="Script" uid="uid://dhfjiwg5s03ke" path="res://scenes/main/CharacterSelector.gd" id="1_5mrgc"]
+[ext_resource type="Texture2D" uid="uid://p6dhdftny000" path="res://assets/art/sprites/player/male_idle.png" id="1_q8a36"]
+[ext_resource type="Texture2D" uid="uid://b5jt2ehwia45w" path="res://assets/art/sprites/player/female_idle.png" id="2_5mrgc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qp1m"]
+atlas = ExtResource("1_q8a36")
+region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f57h6"]
+atlas = ExtResource("1_q8a36")
+region = Rect2(48, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycnul"]
+atlas = ExtResource("1_q8a36")
+region = Rect2(96, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rs1o"]
+atlas = ExtResource("1_q8a36")
+region = Rect2(144, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xewg1"]
+atlas = ExtResource("1_q8a36")
+region = Rect2(192, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yied"]
+atlas = ExtResource("1_q8a36")
+region = Rect2(240, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6eiw5"]
+atlas = ExtResource("1_q8a36")
+region = Rect2(288, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bwrl5"]
+atlas = ExtResource("1_q8a36")
+region = Rect2(336, 0, 48, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cvf53"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qp1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f57h6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycnul")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rs1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xewg1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yied")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6eiw5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bwrl5")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jouy7"]
+atlas = ExtResource("2_5mrgc")
+region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdbqp"]
+atlas = ExtResource("2_5mrgc")
+region = Rect2(48, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4nicp"]
+atlas = ExtResource("2_5mrgc")
+region = Rect2(96, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ad8eo"]
+atlas = ExtResource("2_5mrgc")
+region = Rect2(144, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11yrw"]
+atlas = ExtResource("2_5mrgc")
+region = Rect2(192, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkpch"]
+atlas = ExtResource("2_5mrgc")
+region = Rect2(240, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wnd5"]
+atlas = ExtResource("2_5mrgc")
+region = Rect2(288, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqjms"]
+atlas = ExtResource("2_5mrgc")
+region = Rect2(336, 0, 48, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q55dp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jouy7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdbqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4nicp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ad8eo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11yrw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkpch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wnd5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqjms")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}]
+
+[node name="CharacterSelector" type="Node2D"]
+script = ExtResource("1_5mrgc")
+
+[node name="CanvasLayer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="VBoxContainer" type="Control" parent="CanvasLayer"]
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1081.0
+
+[node name="Title" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+offset_left = 428.0
+offset_top = 52.0
+offset_right = 1571.0
+offset_bottom = 227.0
+theme_override_font_sizes/font_size = 128
+text = "Character Selector"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameContainer" type="Control" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+anchors_preset = 0
+offset_top = 27.0
+offset_right = 1920.0
+offset_bottom = 27.0
+
+[node name="NameLabel" type="Label" parent="CanvasLayer/VBoxContainer/NameContainer"]
+layout_mode = 2
+offset_left = 665.0
+offset_top = 313.0
+offset_right = 817.0
+offset_bottom = 380.0
+theme_override_font_sizes/font_size = 48
+text = "Name:"
+
+[node name="NameInput" type="LineEdit" parent="CanvasLayer/VBoxContainer/NameContainer"]
+layout_mode = 2
+offset_left = 1012.0
+offset_top = 324.0
+offset_right = 1337.0
+offset_bottom = 378.0
+
+[node name="GenderContainer" type="Control" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+anchors_preset = 0
+offset_top = 31.0
+offset_right = 1920.0
+offset_bottom = 31.0
+
+[node name="MaleButton" type="Button" parent="CanvasLayer/VBoxContainer/GenderContainer"]
+layout_mode = 2
+offset_left = 708.0
+offset_top = 449.0
+offset_right = 866.0
+offset_bottom = 654.0
+
+[node name="FemaleButton" type="Button" parent="CanvasLayer/VBoxContainer/GenderContainer"]
+layout_mode = 2
+offset_left = 1104.0
+offset_top = 456.0
+offset_right = 1271.0
+offset_bottom = 646.0
+
+[node name="PreviewContainer" type="Control" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+anchors_preset = 0
+offset_top = 35.0
+offset_right = 1920.0
+offset_bottom = 35.0
+
+[node name="MalePreview" type="AnimatedSprite2D" parent="CanvasLayer/VBoxContainer/PreviewContainer"]
+position = Vector2(784, 552)
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_cvf53")
+animation = &"idle_down"
+
+[node name="FemalePreview" type="AnimatedSprite2D" parent="CanvasLayer/VBoxContainer/PreviewContainer"]
+position = Vector2(1182, 547)
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_q55dp")
+animation = &"idle_down"
+
+[node name="ErrorLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+offset_top = 39.0
+offset_right = 1920.0
+offset_bottom = 62.0
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+offset_left = 771.0
+offset_top = 854.0
+offset_right = 1119.0
+offset_bottom = 979.0
+theme_override_font_sizes/font_size = 64
+text = "Play"

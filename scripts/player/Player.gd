@@ -14,9 +14,15 @@ func _process(delta: float) -> void:
 			hud2.global_position = screen_pos + Vector2(-100, -70)
 			
 func _ready():
-	super._ready() 
+	super._ready()
+	display_name = GameManager.player_name 
+	GameManager.connect("player_name_changed", _on_player_name_changed)
 	can_patrol = false 
 	Logger.info(LOG_CAT, "'%s' (Player) listo y controlado por input." % name, self)
+
+func _on_player_name_changed(new_name):
+	display_name = new_name
+	Logger.debug(LOG_CAT, "Nombre actualizado a: %s" % new_name, self)
 
 func heal(amount: int):
 	hp += amount
@@ -78,7 +84,7 @@ func _update_idle_animation():
 		return
 
 	var base_anim = _get_base_animation_name_from_direction()
-	var anim_to_play = gender + "_idle_" + base_anim
+	var anim_to_play = GameManager.player_gender + "_idle_" + base_anim
 
 	if facing_dir == Vector2.ZERO and sprite.animation.begins_with("idle_") and sprite.is_playing():
 		return
@@ -100,7 +106,7 @@ func _update_walk_animation():
 		return
 
 	var base_anim = _get_base_animation_name_from_direction()
-	var anim_to_play = gender + "_walk_" + base_anim
+	var anim_to_play = GameManager.player_gender + "_walk_" + base_anim
 
 	if facing_dir == Vector2.ZERO:
 		_update_idle_animation()
@@ -135,7 +141,7 @@ func _enter_dying_state():
 	set_collision_mask_value(3, false)
 	set_collision_mask_value(4, false)
 	var base_dir = _get_base_animation_name_from_direction()
-	var anim_to_play = gender + "_death_" + base_dir
+	var anim_to_play = GameManager.player_gender + "_death_" + base_dir
 	if not is_instance_valid(sprite) or not sprite.sprite_frames:
 		queue_free()
 		return
