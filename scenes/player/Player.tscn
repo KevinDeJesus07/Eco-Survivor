@@ -23,4 +23,4 @@ position_smoothing_enabled = true
 position = Vector2(0, 3.8147e-06)
 scale = Vector2(2.83333, 2.23438)
 sprite_frames = ExtResource("3_4kuee")
-animation = &"death_up_right"
+animation = &"female_death_up_right"

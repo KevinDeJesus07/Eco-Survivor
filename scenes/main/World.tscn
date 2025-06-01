@@ -13,7 +13,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vup0r"]
 size = Vector2(115, 1260.77)
 
-[node name="MainTestScene" type="Node2D"]
+[node name="World" type="Node2D"]
 script = ExtResource("1_kqrnq")
 
 [node name="Player" parent="." instance=ExtResource("2_y4jhw")]

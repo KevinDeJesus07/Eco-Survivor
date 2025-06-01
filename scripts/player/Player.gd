@@ -4,6 +4,7 @@ extends BaseEntity
 @onready var placeholder: ColorRect = $VisualPlaceholder
 @onready var hud2: Control = null
 # var facing_dir: Vector2 = Vector2.DOWN
+var gender: String = "female"
 
 func _process(delta: float) -> void:
 	if hud2 and get_viewport():
@@ -77,7 +78,7 @@ func _update_idle_animation():
 		return
 
 	var base_anim = _get_base_animation_name_from_direction()
-	var anim_to_play = "idle_" + base_anim
+	var anim_to_play = gender + "_idle_" + base_anim
 
 	if facing_dir == Vector2.ZERO and sprite.animation.begins_with("idle_") and sprite.is_playing():
 		return
@@ -99,7 +100,7 @@ func _update_walk_animation():
 		return
 
 	var base_anim = _get_base_animation_name_from_direction()
-	var anim_to_play = "walk_" + base_anim
+	var anim_to_play = gender + "_walk_" + base_anim
 
 	if facing_dir == Vector2.ZERO:
 		_update_idle_animation()
@@ -134,7 +135,7 @@ func _enter_dying_state():
 	set_collision_mask_value(3, false)
 	set_collision_mask_value(4, false)
 	var base_dir = _get_base_animation_name_from_direction()
-	var anim_to_play = "death_" + base_dir
+	var anim_to_play = gender + "_death_" + base_dir
 	if not is_instance_valid(sprite) or not sprite.sprite_frames:
 		queue_free()
 		return
