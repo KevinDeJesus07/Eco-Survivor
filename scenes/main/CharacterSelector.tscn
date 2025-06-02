@@ -1,8 +1,14 @@
-[gd_scene load_steps=22 format=3 uid="uid://blc1hfy7rqivp"]
+[gd_scene load_steps=25 format=3 uid="uid://blc1hfy7rqivp"]
 
 [ext_resource type="Script" uid="uid://dhfjiwg5s03ke" path="res://scenes/main/CharacterSelector.gd" id="1_5mrgc"]
 [ext_resource type="Texture2D" uid="uid://p6dhdftny000" path="res://assets/art/sprites/player/male_idle.png" id="1_q8a36"]
 [ext_resource type="Texture2D" uid="uid://b5jt2ehwia45w" path="res://assets/art/sprites/player/female_idle.png" id="2_5mrgc"]
+[ext_resource type="Texture2D" uid="uid://da3ul83fgy1lk" path="res://nenufondo.png" id="2_f57h6"]
+[ext_resource type="FontFile" uid="uid://clwoxfyjfi4fb" path="res://Symtext.ttf" id="3_ycnul"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6rs1o"]
+texture = ExtResource("2_f57h6")
+modulate_color = Color(0.423651, 0.423651, 0.423651, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4qp1m"]
 atlas = ExtResource("1_q8a36")
@@ -139,6 +145,12 @@ script = ExtResource("1_5mrgc")
 layout_mode = 3
 anchors_preset = 0
 
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+layout_mode = 0
+offset_right = 1921.0
+offset_bottom = 1083.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_6rs1o")
+
 [node name="VBoxContainer" type="Control" parent="CanvasLayer"]
 anchors_preset = 0
 offset_right = 1920.0
@@ -146,10 +158,11 @@ offset_bottom = 1081.0
 
 [node name="Title" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-offset_left = 428.0
-offset_top = 52.0
-offset_right = 1571.0
-offset_bottom = 227.0
+offset_left = 93.0
+offset_top = 107.0
+offset_right = 1781.0
+offset_bottom = 295.0
+theme_override_fonts/font = ExtResource("3_ycnul")
 theme_override_font_sizes/font_size = 128
 text = "Character Selector"
 horizontal_alignment = 1
@@ -168,6 +181,7 @@ offset_left = 665.0
 offset_top = 313.0
 offset_right = 817.0
 offset_bottom = 380.0
+theme_override_fonts/font = ExtResource("3_ycnul")
 theme_override_font_sizes/font_size = 48
 text = "Name:"
 
@@ -230,5 +244,6 @@ offset_left = 771.0
 offset_top = 854.0
 offset_right = 1119.0
 offset_bottom = 979.0
+theme_override_fonts/font = ExtResource("3_ycnul")
 theme_override_font_sizes/font_size = 64
 text = "Play"
