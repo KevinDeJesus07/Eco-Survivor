@@ -16,9 +16,24 @@ func _process(delta: float) -> void:
 func _ready():
 	super._ready()
 	display_name = GameManager.player_name 
+	GameManager.player_hp = hp
+	GameManager.player_max_hp = max_hp
 	GameManager.connect("player_name_changed", _on_player_name_changed)
+	TimerLogic.tiempo_agotado.connect(_upgrade_level)
 	can_patrol = false 
 	Logger.info(LOG_CAT, "'%s' (Player) listo y controlado por input." % name, self)
+
+func _upgrade_level():
+	max_hp += 5
+	hp = max_hp
+	speed += 10.0
+	
+	GameManager.player_hp = hp
+	GameManager.player_max_hp = max_hp
+	
+	if is_instance_valid(hud_instance) and hud_instance.has_method("update_health"):
+		hud_instance.update_health(hp, max_hp)
+		
 
 func _on_player_name_changed(new_name):
 	display_name = new_name
@@ -29,8 +44,11 @@ func heal(amount: int):
 	if hp > max_hp:
 		hp = max_hp
 		
+	GameManager.player_hp = hp
+	GameManager.player_max_hp = max_hp
+		
 	if is_instance_valid(hud_instance) and hud_instance.has_method("update_health"):
-		hud_instance.update_health(hp)
+		hud_instance.update_health(hp, max_hp)
 		
 	Logger.priority(LOG_CAT, "Player curado", self)
 

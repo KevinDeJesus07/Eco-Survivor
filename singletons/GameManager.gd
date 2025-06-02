@@ -1,10 +1,12 @@
 extends Node
 
 var player_gender: String = "male"
-
-var player_node: Node = null
+var player_max_hp: int
+var player_hp: int
+var player_speed: float
 
 signal player_name_changed(new_name)
+signal update_health(new_hp, max_hp)
 
 var player_name: String = "Kevin":
 	set(value):

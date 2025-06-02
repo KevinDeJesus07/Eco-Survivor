@@ -49,10 +49,39 @@ func update_name(new_name: String):
 func _on_display_name_changed(new_name):
 	update_name(new_name)
 
-func update_health(new_hp: int):
+"""
+func update_health(new_hp: int, new_max_hp: int = -1):
 	if is_instance_valid(health):
+		var actual_max_hp = GameManager.player_max_hp
+		
+		if new_max_hp > 0:
+			actual_max_hp = new_max_hp
+			GameManager.player_max_hp = new_max_hp
+			
 		health.value = new_hp
+		health.max_value = actual_max_hp	
+			
 		if is_instance_valid(health_text):
 			health_text.text = str(new_hp)
 	else:
 		Logger.priority(LOG_CAT, "Instancia no válida de Health", self)
+"""
+func update_health(new_hp: int, new_max_hp: int = -1):
+	if is_instance_valid(health):
+		if new_max_hp > 0:
+			set_max_health(new_max_hp)
+		
+		set_current_health(new_hp)
+	else:
+		Logger.priority(LOG_CAT, "Instancia no válida de Health", self)
+
+func set_max_health(max_value: int):
+	health.max_value = max_value
+	health.queue_redraw()
+	health.value = health.value - 0.01
+	health.value = health.value + 0.01
+
+func set_current_health(value: int):
+	health.value = value
+	if is_instance_valid(health_text):
+		health_text.text = str(value)

@@ -213,10 +213,11 @@ func take_damage(amount: int):
 		return
 
 	hp -= amount
+	GameManager.player_hp = hp
 	Logger.debug(LOG_CAT, "'%s' recibió %d de daño. HP: %d/%d" % [name, amount, hp, max_hp], self)
 
 	if is_instance_valid(hud_instance) and hud_instance.has_method("update_health"):
-		hud_instance.update_health(hp)
+		hud_instance.update_health(hp, max_hp)
 
 	if hp <= 0:
 		hp = 0

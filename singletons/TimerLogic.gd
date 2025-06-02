@@ -8,8 +8,8 @@ signal tiempo_agregado(cantidad: float)
 signal tiempo_restado(cantidad: float)
 
 # Variables de estado
-var tiempo_inicial: float = 120.0
-var tiempo_actual: float = 120.0
+var tiempo_inicial: float = 20.0
+var tiempo_actual: float = 20.0
 var tiempo_maximo_permitido: float = 300.0
 var esta_corriendo: bool = false
 var tiempo_pausado: bool = false
