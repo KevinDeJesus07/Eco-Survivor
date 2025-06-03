@@ -1,8 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://blc1hfy7rqivp"]
+[gd_scene load_steps=24 format=3 uid="uid://blc1hfy7rqivp"]
 
 [ext_resource type="Script" uid="uid://dhfjiwg5s03ke" path="res://scenes/main/CharacterSelector.gd" id="1_5mrgc"]
 [ext_resource type="Texture2D" uid="uid://p6dhdftny000" path="res://assets/art/sprites/player/male_idle.png" id="1_q8a36"]
 [ext_resource type="Texture2D" uid="uid://b5jt2ehwia45w" path="res://assets/art/sprites/player/female_idle.png" id="2_5mrgc"]
+[ext_resource type="FontFile" uid="uid://4xpu4uxa1ln5" path="res://assets/fonts/Symtext.ttf" id="2_f57h6"]
+[ext_resource type="Texture2D" uid="uid://cmnlrlue1qvyi" path="res://assets/art/sprites/ui/nenufondo.png" id="4_4qp1m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4qp1m"]
 atlas = ExtResource("1_q8a36")
@@ -146,10 +148,14 @@ offset_bottom = 1081.0
 
 [node name="Title" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-offset_left = 428.0
+offset_left = 153.0
 offset_top = 52.0
-offset_right = 1571.0
-offset_bottom = 227.0
+offset_right = 1841.0
+offset_bottom = 240.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("2_f57h6")
 theme_override_font_sizes/font_size = 128
 text = "Character Selector"
 horizontal_alignment = 1
@@ -232,3 +238,17 @@ offset_right = 1119.0
 offset_bottom = 979.0
 theme_override_font_sizes/font_size = 64
 text = "Play"
+
+[node name="Panel" type="Panel" parent="."]
+z_index = -1
+offset_right = 1918.0
+offset_bottom = 1072.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+z_index = -1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("4_4qp1m")
