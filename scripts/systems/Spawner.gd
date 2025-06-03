@@ -21,6 +21,11 @@ enum SpawnMode {
 @export var time_interval: float = 5.0
 @export var initial_delay: float = 0.0
 
+@export_group("Collision Check")
+@export var check_collision: bool = true
+@export var collision_mask: int = 1
+@export var max_spawn_attempts: int = 10
+
 @export_group("Nodos requeridos")
 @export var spawn_area_node_path: NodePath = ^"SpawnArea"
 @export var spawn_timer_node_path: NodePath = ^"SpawnTimer"
@@ -99,6 +104,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if not timer or not timer is Timer:
 		warnings.append("¡'Spawn Timer Node Path' no apunta a un Timer válido!")
 		
+	if check_collision and collision_mask == 0:
+		warnings.append("¡Collision Mask está en 0! No se detectarán colisiones")
+		
 	return warnings
 	
 func trigger_spawn(count: int = 1):
@@ -108,6 +116,7 @@ func trigger_spawn(count: int = 1):
 		spawn_entity()
 	
 func spawn_entity():
+	print("Intentando spawnear entidad...")
 	if not _can_spawn: return
 	if not scene_to_spawn: 
 		Logger.priority(LOG_CAT, "No hay 'scene_to_spawn' configurada.", self)
@@ -118,8 +127,26 @@ func spawn_entity():
 		return
 
 	var instance = scene_to_spawn.instantiate()
-
-	var spawn_position = get_random_position_in_area()
+	var spawn_position = Vector2.ZERO
+	
+	var valid_position = false
+	var attempts = 0
+	
+	while not valid_position and attempts < max_spawn_attempts:
+		spawn_position = get_random_position_in_area()
+		
+		if check_collision and is_position_colliding(spawn_position):
+			attempts += 1
+		else:
+			valid_position = true
+	
+	if not valid_position:
+		Logger.priority(LOG_CAT, "No se encontró posición válida después de " + str(attempts) + " intentos", self)
+		Logger.warning(LOG_CAT, "Considera aumentar el área de spawn o reducir obstáculos", self)
+		instance.queue_free()
+		_can_spawn = true
+		return
+	
 	if instance is Node2D:
 		instance.global_position = spawn_position
 	else:
@@ -135,6 +162,17 @@ func spawn_entity():
 	instance.tree_exited.connect(_on_instance_destroyed.bind(instance))
 	
 	Logger.priority(LOG_CAT, "Entidad generada en" + str(spawn_position), self)
+
+func is_position_colliding(position: Vector2) -> bool:
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsPointQueryParameters2D.new()
+	
+	query.position = position
+	query.collision_mask = collision_mask
+	query.exclude = []  # Puedes excluir objetos específicos si es necesario
+	
+	var results = space_state.intersect_point(query, 1)
+	return results.size() > 0
 
 func get_random_position_in_area() -> Vector2:
 	if not _spawn_collision_shape or not _spawn_collision_shape.shape:
@@ -178,41 +216,3 @@ func _on_instance_destroyed(instance: Node):
 	if index != -1:
 		_active_instances.remove_at(index)
 		Logger.priority(LOG_CAT, "Instancia destruida, conteo actual: " + str(_active_instances.size()), self)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

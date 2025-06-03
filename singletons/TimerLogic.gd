@@ -70,6 +70,8 @@ func _tiempo_terminado():
 	esta_corriendo = false
 	print("¡Tiempo agotado!")
 	tiempo_agotado.emit()
+	reiniciar_completamente()
+	iniciar_temporizador()
 
 func _process(delta: float):
 	if esta_corriendo and not tiempo_pausado:
