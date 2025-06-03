@@ -5,8 +5,11 @@ var player_max_hp: int
 var player_hp: int
 var player_speed: float
 
+var total_score: int = 0
+
 signal player_name_changed(new_name)
 signal update_health(new_hp, max_hp)
+signal score_changed(new_score)
 
 var player_name: String = "Kevin":
 	set(value):
@@ -16,6 +19,10 @@ var player_name: String = "Kevin":
 
 func _ready():
 	load_data()
+
+func add_score(amount: int):
+	total_score += amount
+	emit_signal("score_changed", total_score)
 
 func save_data():
 	var data = {

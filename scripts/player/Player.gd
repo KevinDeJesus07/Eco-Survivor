@@ -5,6 +5,9 @@ extends BaseEntity
 @onready var hud2: Control = null
 # var facing_dir: Vector2 = Vector2.DOWN
 var gender: String = "female"
+var score: int = 0
+
+signal score_changed(new_score)
 
 func _process(delta: float) -> void:
 	if hud2 and get_viewport():
@@ -24,9 +27,8 @@ func _ready():
 	Logger.info(LOG_CAT, "'%s' (Player) listo y controlado por input." % name, self)
 
 func _upgrade_level():
-	max_hp += 5
-	hp = max_hp
-	speed += 10.0
+	max_hp += 2
+	speed += 50.0
 	
 	GameManager.player_hp = hp
 	GameManager.player_max_hp = max_hp
@@ -34,6 +36,10 @@ func _upgrade_level():
 	if is_instance_valid(hud_instance) and hud_instance.has_method("update_health"):
 		hud_instance.update_health(hp, max_hp)
 		
+
+func recycle(amount: int):
+	score += amount
+	GameManager.add_score(amount)
 
 func _on_player_name_changed(new_name):
 	display_name = new_name
