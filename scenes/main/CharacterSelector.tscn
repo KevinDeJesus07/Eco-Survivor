@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://blc1hfy7rqivp"]
+[gd_scene load_steps=25 format=3 uid="uid://blc1hfy7rqivp"]
 
-[ext_resource type="Script" uid="uid://dhfjiwg5s03ke" path="res://scenes/main/CharacterSelector.gd" id="1_5mrgc"]
+[ext_resource type="Script" uid="uid://dhfjiwg5s03ke" path="res://scripts/scenes/CharacterSelector.gd" id="1_5mrgc"]
 [ext_resource type="Texture2D" uid="uid://p6dhdftny000" path="res://assets/art/sprites/player/male_idle.png" id="1_q8a36"]
 [ext_resource type="Texture2D" uid="uid://b5jt2ehwia45w" path="res://assets/art/sprites/player/female_idle.png" id="2_5mrgc"]
 [ext_resource type="FontFile" uid="uid://4xpu4uxa1ln5" path="res://assets/fonts/Symtext.ttf" id="2_f57h6"]
 [ext_resource type="Texture2D" uid="uid://cmnlrlue1qvyi" path="res://assets/art/sprites/ui/nenufondo.png" id="4_4qp1m"]
+[ext_resource type="AudioStream" uid="uid://kc48drb6rywy" path="res://assets/audio/music/MenusMusic.ogg" id="6_ycnul"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4qp1m"]
 atlas = ExtResource("1_q8a36")
@@ -252,3 +253,8 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 texture = ExtResource("4_4qp1m")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ycnul")
+autoplay = true
+parameters/looping = true

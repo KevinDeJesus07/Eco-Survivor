@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://dvuxylws0ulaq"]
+[gd_scene load_steps=22 format=4 uid="uid://dvuxylws0ulaq"]
 
 [ext_resource type="Script" uid="uid://b2o74erlscffj" path="res://scripts/scenes/World.gd" id="1_kqrnq"]
 [ext_resource type="PackedScene" uid="uid://4crmle28okii" path="res://scenes/player/Player.tscn" id="2_y4jhw"]
@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://va0w0g2kao51" path="res://scenes/ui/TimerUI.tscn" id="10_y4jhw"]
 [ext_resource type="PackedScene" uid="uid://f83ekgturq7o" path="res://scenes/ui/ScoreUI.tscn" id="11_qvt4f"]
 [ext_resource type="PackedScene" uid="uid://b3csum8lop701" path="res://scenes/main/PauseMenu.tscn" id="13_bdfpr"]
-[ext_resource type="AudioStream" uid="uid://bnyfqqu2myapb" path="res://assets/audio/music/WorldMusic.ogg" id="14_odbnn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_057ss"]
 size = Vector2(1905, 1277)
@@ -196,21 +195,9 @@ layout_mode = 2
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_rbyid")
 
-[node name="PauseLayer" type="CanvasLayer" parent="."]
-
-[node name="CenterContainer" type="CenterContainer" parent="PauseLayer"]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="PauseMenu" parent="PauseLayer/CenterContainer" instance=ExtResource("13_bdfpr")]
+[node name="PauseMenu" parent="." instance=ExtResource("13_bdfpr")]
 visible = false
 z_index = 150
-layout_mode = 2
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("14_odbnn")
-autoplay = true
-parameters/looping = true
 
 [editable path="Pickups/Manzanas/AppleSpawner"]
 [editable path="Pickups/Trash/TrashSpawner"]

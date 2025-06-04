@@ -47,7 +47,7 @@ const LOG_CAT: String = "SPAWNER"
 func _ready():
 	add_to_group("spawners")
 
-	reset_to_defaults()  # <- Mueve esto aquí arriba para que todo parta con valores base
+	reset_to_defaults() 
 
 	_spawn_area = get_node_or_null(spawn_area_node_path)
 	_spawn_timer = get_node_or_null(spawn_timer_node_path)

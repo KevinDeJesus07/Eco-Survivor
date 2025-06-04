@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://yd03ie10ydsl"]
+[gd_scene load_steps=5 format=3 uid="uid://yd03ie10ydsl"]
 
 [ext_resource type="Script" uid="uid://dflb1q78v2d2g" path="res://scripts/scenes/MainMenu.gd" id="1_qi05h"]
 [ext_resource type="FontFile" uid="uid://4xpu4uxa1ln5" path="res://assets/fonts/Symtext.ttf" id="2_v3gjy"]
 [ext_resource type="Texture2D" uid="uid://cmnlrlue1qvyi" path="res://assets/art/sprites/ui/nenufondo.png" id="3_jen06"]
+[ext_resource type="AudioStream" uid="uid://kc48drb6rywy" path="res://assets/audio/music/MenusMusic.ogg" id="4_jen06"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -50,5 +51,10 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 texture = ExtResource("3_jen06")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jen06")
+autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

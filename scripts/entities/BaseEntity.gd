@@ -1,11 +1,9 @@
-# BaseEntity.gd
 extends CharacterBody2D
 class_name BaseEntity
 
 const LOG_CAT: String = "BASE_ENTITY"
 
 @export_group("Base Stats")
-#@export var display_name: String = "default"
 @export var max_hp: int = 100
 @export var speed: float = 75.0
 
@@ -41,7 +39,7 @@ var stuck_timer: Timer
 
 signal display_name_changed(new_name)
 
-var display_name: String = "SLime":
+var display_name: String = "Slime":
 	set(value):
 		if display_name != value:
 			display_name = value
