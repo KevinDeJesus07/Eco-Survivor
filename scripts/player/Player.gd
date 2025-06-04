@@ -7,6 +7,10 @@ extends BaseEntity
 var gender: String = "female"
 var score: int = 0
 
+var default_max_hp := 10
+var default_speed := 250
+var default_score := 0
+
 signal score_changed(new_score)
 
 func _process(delta: float) -> void:
@@ -17,6 +21,7 @@ func _process(delta: float) -> void:
 			hud2.global_position = screen_pos + Vector2(-100, -70)
 			
 func _ready():
+	reset_to_defaults()
 	super._ready()
 	display_name = GameManager.player_name 
 	GameManager.player_hp = hp
@@ -27,14 +32,20 @@ func _ready():
 	Logger.info(LOG_CAT, "'%s' (Player) listo y controlado por input." % name, self)
 
 func _upgrade_level():
-	max_hp += 2
-	speed += 50.0
+	GameManager.player_max_hp_multiplier += GameManager.player_upgrade_increment_hp
+	GameManager.player_speed_multiplier += GameManager.player_upgrade_increment_speed
+
+	max_hp = int(round(default_max_hp * GameManager.player_max_hp_multiplier))
+	speed = int(round(default_speed * GameManager.player_speed_multiplier))
+	
+	hp = max_hp
 	
 	GameManager.player_hp = hp
 	GameManager.player_max_hp = max_hp
 	
 	if is_instance_valid(hud_instance) and hud_instance.has_method("update_health"):
 		hud_instance.update_health(hp, max_hp)
+
 		
 
 func recycle(amount: int):
@@ -157,6 +168,16 @@ func _state_attacking(delta: float):
 func _state_dying(delta: float):
 	Logger.info(LOG_CAT, "'%s' (Player) está en estado DYING." % name, self)
 	pass
+	
+func reset_to_defaults():
+	max_hp = default_max_hp
+	hp = max_hp
+	speed = default_speed
+	score = default_score
+	facing_dir = Vector2.DOWN
+	GameManager.player_hp = hp
+	GameManager.player_max_hp = max_hp
+	GameManager.total_score = score
 	
 func _enter_dying_state():
 	super._enter_dying_state()

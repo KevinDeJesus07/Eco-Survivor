@@ -11,7 +11,8 @@ enum SpawnMode {
 @export_group("Main Config")
 @export var scene_to_spawn: PackedScene
 @export var spawn_mode: SpawnMode = SpawnMode.TIMER
-@export var add_to_group: String = ""
+@export var group_for_spawned_entities: String = ""
+@export var spawner_type: String = "slime"  # "slime", "heal", "trash"
 
 @export_group("Limits and Counts")
 @export var spawn_count: int = 5
@@ -37,9 +38,17 @@ var _spawn_timer: Timer
 var _active_instances: Array[Node] = []
 var _can_spawn: bool = true
 
+var default_time_interval := 5.0
+var default_max_instances := 5
+var default_spawn_count := 1
+
 const LOG_CAT: String = "SPAWNER"
 
 func _ready():
+	add_to_group("spawners")
+
+	reset_to_defaults()  # <- Mueve esto aquí arriba para que todo parta con valores base
+
 	_spawn_area = get_node_or_null(spawn_area_node_path)
 	_spawn_timer = get_node_or_null(spawn_timer_node_path)
 	
@@ -82,7 +91,16 @@ func _ready():
 			
 		SpawnMode.ON_EVENT:
 			pass
-			
+
+
+func update_spawn_config(new_spawn_count: int, new_max_instances: int, new_time_interval: float):
+	spawn_count = new_spawn_count
+	max_instances_per_spawner = new_max_instances
+	time_interval = new_time_interval
+	
+	if _spawn_timer:
+		_spawn_timer.wait_time = time_interval
+
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
 	if not scene_to_spawn:
@@ -154,8 +172,8 @@ func spawn_entity():
 
 	get_parent().add_child(instance)
 
-	if not add_to_group.is_empty():
-		instance.add_to_group(add_to_group)
+	if not group_for_spawned_entities.is_empty():
+		instance.add_to_group(group_for_spawned_entities)
 
 	_active_instances.append(instance)
 
@@ -208,7 +226,7 @@ func _on_spawn_timer_timeout():
 			spawn_entity()
 		
 		SpawnMode.MAINTAIN:
-			if _active_instances.size() < spawn_count:
+			if _active_instances.size() < max_instances_per_spawner:
 				spawn_entity()
 	
 func _on_instance_destroyed(instance: Node):
@@ -216,3 +234,11 @@ func _on_instance_destroyed(instance: Node):
 	if index != -1:
 		_active_instances.remove_at(index)
 		Logger.priority(LOG_CAT, "Instancia destruida, conteo actual: " + str(_active_instances.size()), self)
+		
+func reset_to_defaults():
+	time_interval = default_time_interval
+	max_instances_per_spawner = default_max_instances
+	spawn_count = default_spawn_count
+
+	if _spawn_timer:
+		_spawn_timer.wait_time = time_interval

@@ -1,5 +1,8 @@
 extends BaseEntity
 
+var base_speed = 200
+var base_attack_damage = 2
+
 @export_group("Slime Behavior")
 @export var leash_radius: float = 250.0
 @export var attack_range: float = 100.0
@@ -28,7 +31,8 @@ const LEASH_MARGIN := 32 # Margen para evitar rebotes en el leash
 
 func _ready():
 	super._ready()
-	
+	add_to_group("enemigos")
+
 	current_patience = max_patience # Empezar con paciencia al máximo
 
 	if not has_node("AttackCooldownTimer"):
@@ -48,6 +52,13 @@ func _ready():
 		Logger.error(LOG_CAT, "Nodo PlayerDetectionArea no encontrado en SlimeEnemy!", self)
 
 	Logger.info(LOG_CAT, "'%s' (Slime) listo." % name, self)
+	
+	update_stats()
+
+func update_stats():
+	speed = int(round(base_speed * GameManager.enemy_speed_multiplier))
+	attack_damage = int(round(base_attack_damage * GameManager.enemy_damage_multiplier))
+
 
 # --- PROCESO PRINCIPAL ---
 func _process(delta: float):

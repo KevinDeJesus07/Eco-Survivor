@@ -67,9 +67,7 @@ layout_mode = 2
 [node name="AppleSpawner" parent="Pickups/Manzanas" instance=ExtResource("9_kt03e")]
 position = Vector2(445, 197)
 scene_to_spawn = ExtResource("4_rbyid")
-spawn_mode = 3
-group_for_spawned_entities = ""
-spawner_type = "heal"
+group_for_spawned_entities = null
 spawn_count = 1
 max_instances_per_spawner = 20
 time_interval = 4.0
@@ -85,9 +83,7 @@ wait_time = 4.0
 
 [node name="TrashSpawner" parent="Pickups/Trash" instance=ExtResource("9_kt03e")]
 scene_to_spawn = ExtResource("6_rbyid")
-spawn_mode = 3
-group_for_spawned_entities = ""
-spawner_type = "trash"
+group_for_spawned_entities = null
 spawn_count = 1
 max_instances_per_spawner = 20
 time_interval = 3.0
@@ -120,6 +116,9 @@ position = Vector2(323, 356)
 motion_mode = 1
 hud = null
 
+[node name="Slime" parent="Enemies" instance=ExtResource("7_057ss")]
+position = Vector2(606, 147)
+
 [node name="Map" type="Node2D" parent="."]
 z_index = -5
 
@@ -144,9 +143,7 @@ texture = ExtResource("9_y4jhw")
 [node name="Spawner" parent="." instance=ExtResource("9_kt03e")]
 position = Vector2(1500, -233)
 scene_to_spawn = ExtResource("7_057ss")
-spawn_mode = 3
-group_for_spawned_entities = ""
-spawner_type = "slime"
+group_for_spawned_entities = null
 spawn_count = 1
 max_instances_per_spawner = 5
 
