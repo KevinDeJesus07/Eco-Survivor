@@ -1,7 +1,10 @@
 extends BaseEntity
 
-var base_speed = 200
+var base_speed = 150
 var base_attack_damage = 2
+
+var path_update_timer = 0.0
+const PATH_UPDATE_INTERVAL = 0.2
 
 @export_group("Slime Behavior")
 @export var leash_radius: float = 250.0
@@ -27,11 +30,35 @@ var is_attack_expanding: bool = false
 var attack_hit_applied: bool = false
 var current_patience: float = 0.0 # Paciencia actual
 
+var original_position: Vector2
+
+
 const LEASH_MARGIN := 32 # Margen para evitar rebotes en el leash
 
+func move_while_returning(delta):
+	var next_pos = $NavigationAgent2D.get_next_path_position()
+	var direction = next_pos - global_position
+
+	if direction.length() < 1.0:
+		direction = Vector2.ZERO
+	else:
+		direction = direction.normalized()
+
+	velocity = direction * speed
+	move_and_slide()
+
+	if global_position.distance_to(original_position) < 8.0:
+		_change_state(State.IDLE)
+
 func _ready():
+	original_position = global_position
 	super._ready()
 	add_to_group("enemigos")
+	
+	$NavigationAgent2D.path_desired_distance = 4.0
+	$NavigationAgent2D.target_desired_distance = 4.0
+	
+	#$NavigationAgent2D.debug_enabled = false
 
 	current_patience = max_patience # Empezar con paciencia al máximo
 
@@ -62,13 +89,14 @@ func update_stats():
 
 # --- PROCESO PRINCIPAL ---
 func _process(delta: float):
+	print("Speed:", speed, " Velocity:", velocity.length(), " State:", current_state)
+
 	if is_attack_expanding:
 		_update_expanding_attack(delta)
 	
 	# Actualizar la dirección de la cara (opcional pero útil para animaciones)
 	if velocity.length_squared() > 0.1:
 		facing_dir = velocity.normalized()
-
 
 # --- ESTADOS ---
 
@@ -124,8 +152,8 @@ func _enter_dying_state():
 
 func _enter_returning_state():
 	super._enter_returning_state()
+	$NavigationAgent2D.target_position = original_position
 	Logger.info(LOG_CAT, "'%s' (Slime) se quedó sin paciencia. Volviendo a casa." % name, self)
-	#target_player = null # Dejar de fijarse en el jugador
 
 
 # --- LÓGICA DE ESTADOS ---
@@ -149,67 +177,74 @@ func _state_patrolling(delta: float):
 		_change_state(State.CHASING)
 
 func _state_chasing(delta: float):
-	# 1. Comprobaciones de Validez: ¿Sigue existiendo el jugador? ¿Sigue en el área?
 	if not is_instance_valid(target_player) or not player_detection_area.overlaps_body(target_player):
 		target_player = null
 		_change_state(State.PATROLLING)
 		return
 
+	# Actualizar path solo en intervalos (mejora rendimiento y suavidad)
+	path_update_timer -= delta
+	if path_update_timer <= 0:
+		$NavigationAgent2D.target_position = target_player.global_position
+		path_update_timer = PATH_UPDATE_INTERVAL
+
+	# Obtener dirección del NavigationAgent
+	var next_pos = $NavigationAgent2D.get_next_path_position()
+	var nav_direction = next_pos - global_position
+	if nav_direction.length() > 1.0:
+		nav_direction = nav_direction.normalized()
+	else:
+		nav_direction = Vector2.ZERO
+
 	var distance_to_player = global_position.distance_to(target_player.global_position)
 	var distance_to_center = global_position.distance_to(initial_pos)
 
-	# 2. Comprobar si podemos ATACAR
+	# Comprobar si podemos ATACAR
 	if distance_to_player <= attack_range and attack_cooldown_timer.is_stopped():
 		_change_state(State.ATTACKING)
 		return
 
-	# 3. Lógica de Leash y Paciencia
+	# Lógica de Leash y Paciencia
 	if distance_to_center > leash_radius:
-		# Estamos fuera del leash, ¡gastamos paciencia!
 		current_patience -= delta
 		Logger.debug(LOG_CAT, "'%s' Fuera de leash. Paciencia: %.1f" % [name, current_patience], self)
 		if current_patience <= 0:
 			_change_state(State.RETURNING)
 			return
-		# Si aún tenemos paciencia, seguimos persiguiendo
-		var direction = (target_player.global_position - global_position).normalized()
-		velocity = direction * speed
-	else:
-		# Estamos dentro del leash, recuperamos paciencia y perseguimos
-		current_patience = min(current_patience + patience_recovery_rate * delta, max_patience)
-		var direction = (target_player.global_position - global_position).normalized()
-		velocity = direction * speed
-		# Si estamos muy cerca pero esperando cooldown, nos detenemos para no empujar
-		if distance_to_player <= attack_range:
-			velocity = Vector2.ZERO
 
+	# Usar la dirección de navegación
+	velocity = nav_direction * speed
+
+	# Detenerse si está muy cerca del jugador (esperando cooldown)
+	if distance_to_player <= attack_range:
+		velocity = Vector2.ZERO
+
+	move_and_slide()
 	_update_animation()
 
+
+
 func _state_attacking(delta: float):
-	super._state_attacking(delta) # Mantiene velocidad a CERO
-	# Si el jugador se aleja mucho, cancelar el ataque
-	if not is_instance_valid(target_player) or \
-	   global_position.distance_to(target_player.global_position) > attack_range * 1.5:
-		_cancel_attack()
-		return
+	super._state_attacking(delta)
 
 func _state_returning(delta: float):
-	var distance_to_center = global_position.distance_to(initial_pos)
+	# Actualizar path solo si es necesario
+	if $NavigationAgent2D.target_position != initial_pos:
+		$NavigationAgent2D.target_position = initial_pos
+	
+	# Obtener dirección del NavigationAgent
+	var next_pos = $NavigationAgent2D.get_next_path_position()
+	var direction = (next_pos - global_position).normalized()
+	velocity = direction * speed
+	
+	move_and_slide()
 
-	# Si llegamos al centro (o casi)
-	if distance_to_center <= 5.0:
+	if global_position.distance_to(initial_pos) < 8.0:
 		velocity = Vector2.ZERO
 		_change_state(State.PATROLLING)
 		return
-	else:
-		# Moverse hacia el centro
-		var direction_to_center = (initial_pos - global_position).normalized()
-		velocity = direction_to_center * speed
 
-	_update_animation() # Usar animación de caminar
-	# ¡Importante! Si el jugador entra de nuevo en el área mientras volvemos,
-	# la función _on_player_detection_area_body_entered se encargará de
-	# cambiar el estado de nuevo a CHASING.
+	_update_animation()
 
 func _state_dying(delta: float):
 	# La lógica de animación y queue_free() ya se maneja en _enter_dying_state

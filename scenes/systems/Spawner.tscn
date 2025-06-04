@@ -7,8 +7,8 @@ size = Vector2(1911, 1271)
 
 [node name="Spawner" type="Node2D"]
 script = ExtResource("1_5p3ar")
-group_for_spawned_entities = null
-spawner_type = null
+spawn_count = 1
+max_instances_per_spawner = 5
 
 [node name="SpawnArea" type="Area2D" parent="."]
 collision_layer = 0

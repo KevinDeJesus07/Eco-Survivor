@@ -41,7 +41,7 @@ var stuck_timer: Timer
 
 signal display_name_changed(new_name)
 
-var display_name: String = "Entity":
+var display_name: String = "SLime":
 	set(value):
 		if display_name != value:
 			display_name = value
