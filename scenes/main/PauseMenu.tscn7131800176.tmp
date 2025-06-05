@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3csum8lop701"]
+
+[ext_resource type="Script" uid="uid://bopwxo56xw0uo" path="res://scenes/main/PauseMenu.gd" id="1_tud1e"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tud1e")
+
+[node name="PanelContainer" type="Panel" parent="."]
+z_index = -1
+layout_mode = 0
+offset_left = 800.0
+offset_top = 300.0
+offset_right = 1123.0
+offset_bottom = 698.0
+mouse_filter = 2
+
+[node name="Continuar" type="Button" parent="PanelContainer"]
+layout_mode = 2
+offset_left = 43.0
+offset_top = 43.0
+offset_right = 269.0
+offset_bottom = 134.0
+text = "Continue"
+
+[node name="Reiniciar" type="Button" parent="PanelContainer"]
+layout_mode = 2
+offset_left = 45.0
+offset_top = 148.0
+offset_right = 271.0
+offset_bottom = 239.0
+text = "Restart"
+
+[node name="Salir" type="Button" parent="PanelContainer"]
+layout_mode = 2
+offset_left = 45.0
+offset_top = 259.0
+offset_right = 271.0
+offset_bottom = 350.0
+text = "Quit"
+
+[connection signal="pressed" from="PanelContainer/Continuar" to="." method="_on_continuar_pressed"]
+[connection signal="pressed" from="PanelContainer/Reiniciar" to="." method="_on_reiniciar_pressed"]
+[connection signal="pressed" from="PanelContainer/Salir" to="." method="_on_salir_pressed"]

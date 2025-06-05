@@ -11,7 +11,8 @@ enum SpawnMode {
 @export_group("Main Config")
 @export var scene_to_spawn: PackedScene
 @export var spawn_mode: SpawnMode = SpawnMode.TIMER
-@export var add_to_group: String = ""
+@export var group_for_spawned_entities: String = ""
+@export var spawner_type: String = "slime"  # "slime", "heal", "trash"
 
 @export_group("Limits and Counts")
 @export var spawn_count: int = 5
@@ -20,6 +21,11 @@ enum SpawnMode {
 @export_group("Timer")
 @export var time_interval: float = 5.0
 @export var initial_delay: float = 0.0
+
+@export_group("Collision Check")
+@export var check_collision: bool = true
+@export var collision_mask: int = 1
+@export var max_spawn_attempts: int = 10
 
 @export_group("Nodos requeridos")
 @export var spawn_area_node_path: NodePath = ^"SpawnArea"
@@ -32,9 +38,17 @@ var _spawn_timer: Timer
 var _active_instances: Array[Node] = []
 var _can_spawn: bool = true
 
+var default_time_interval := 5.0
+var default_max_instances := 5
+var default_spawn_count := 1
+
 const LOG_CAT: String = "SPAWNER"
 
 func _ready():
+	add_to_group("spawners")
+
+	reset_to_defaults() 
+
 	_spawn_area = get_node_or_null(spawn_area_node_path)
 	_spawn_timer = get_node_or_null(spawn_timer_node_path)
 	
@@ -77,7 +91,16 @@ func _ready():
 			
 		SpawnMode.ON_EVENT:
 			pass
-			
+
+
+func update_spawn_config(new_spawn_count: int, new_max_instances: int, new_time_interval: float):
+	spawn_count = new_spawn_count
+	max_instances_per_spawner = new_max_instances
+	time_interval = new_time_interval
+	
+	if _spawn_timer:
+		_spawn_timer.wait_time = time_interval
+
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
 	if not scene_to_spawn:
@@ -99,6 +122,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if not timer or not timer is Timer:
 		warnings.append("¡'Spawn Timer Node Path' no apunta a un Timer válido!")
 		
+	if check_collision and collision_mask == 0:
+		warnings.append("¡Collision Mask está en 0! No se detectarán colisiones")
+		
 	return warnings
 	
 func trigger_spawn(count: int = 1):
@@ -108,6 +134,7 @@ func trigger_spawn(count: int = 1):
 		spawn_entity()
 	
 func spawn_entity():
+	print("Intentando spawnear entidad...")
 	if not _can_spawn: return
 	if not scene_to_spawn: 
 		Logger.priority(LOG_CAT, "No hay 'scene_to_spawn' configurada.", self)
@@ -118,8 +145,26 @@ func spawn_entity():
 		return
 
 	var instance = scene_to_spawn.instantiate()
-
-	var spawn_position = get_random_position_in_area()
+	var spawn_position = Vector2.ZERO
+	
+	var valid_position = false
+	var attempts = 0
+	
+	while not valid_position and attempts < max_spawn_attempts:
+		spawn_position = get_random_position_in_area()
+		
+		if check_collision and is_position_colliding(spawn_position):
+			attempts += 1
+		else:
+			valid_position = true
+	
+	if not valid_position:
+		Logger.priority(LOG_CAT, "No se encontró posición válida después de " + str(attempts) + " intentos", self)
+		Logger.warning(LOG_CAT, "Considera aumentar el área de spawn o reducir obstáculos", self)
+		instance.queue_free()
+		_can_spawn = true
+		return
+	
 	if instance is Node2D:
 		instance.global_position = spawn_position
 	else:
@@ -127,14 +172,25 @@ func spawn_entity():
 
 	get_parent().add_child(instance)
 
-	if not add_to_group.is_empty():
-		instance.add_to_group(add_to_group)
+	if not group_for_spawned_entities.is_empty():
+		instance.add_to_group(group_for_spawned_entities)
 
 	_active_instances.append(instance)
 
 	instance.tree_exited.connect(_on_instance_destroyed.bind(instance))
 	
 	Logger.priority(LOG_CAT, "Entidad generada en" + str(spawn_position), self)
+
+func is_position_colliding(position: Vector2) -> bool:
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsPointQueryParameters2D.new()
+	
+	query.position = position
+	query.collision_mask = collision_mask
+	query.exclude = []  # Puedes excluir objetos específicos si es necesario
+	
+	var results = space_state.intersect_point(query, 1)
+	return results.size() > 0
 
 func get_random_position_in_area() -> Vector2:
 	if not _spawn_collision_shape or not _spawn_collision_shape.shape:
@@ -170,7 +226,7 @@ func _on_spawn_timer_timeout():
 			spawn_entity()
 		
 		SpawnMode.MAINTAIN:
-			if _active_instances.size() < spawn_count:
+			if _active_instances.size() < max_instances_per_spawner:
 				spawn_entity()
 	
 func _on_instance_destroyed(instance: Node):
@@ -178,41 +234,11 @@ func _on_instance_destroyed(instance: Node):
 	if index != -1:
 		_active_instances.remove_at(index)
 		Logger.priority(LOG_CAT, "Instancia destruida, conteo actual: " + str(_active_instances.size()), self)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
+func reset_to_defaults():
+	time_interval = default_time_interval
+	max_instances_per_spawner = default_max_instances
+	spawn_count = default_spawn_count
+
+	if _spawn_timer:
+		_spawn_timer.wait_time = time_interval

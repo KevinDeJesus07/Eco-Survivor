@@ -753,17 +753,18 @@ collision_layer = 4
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("2_uxl5r")
-leash_radius = 250.0
-attack_range = 100.0
-attack_damage = 1
-attack_cooldown_time = 1.5
+leash_radius = 600.0
+attack_range = 120.0
+attack_damage = 2
+attack_cooldown_time = 1.2
 max_patience = 5.0
 patience_recovery_rate = 0.5
 attack_expansion_speed = 77.0
-attack_max_radius = 110.0
+attack_max_radius = 140.0
 attack_start_radius = 20.0
-display_name = "Slime"
 max_hp = 10
+speed = 150.0
+patrol_radius = 400.0
 hud = ExtResource("3_kvn5r")
 
 [node name="Collider" parent="." index="0"]
@@ -783,3 +784,5 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea" index="0"]
 position = Vector2(1, 11)
 shape = SubResource("CircleShape2D_oa1o7")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="4"]

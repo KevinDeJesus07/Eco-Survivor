@@ -3,10 +3,12 @@
 [ext_resource type="Script" uid="uid://clg2skee241j6" path="res://scripts/systems/Spawner.gd" id="1_5p3ar"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5mjy4"]
-size = Vector2(1260, 652.5)
+size = Vector2(1911, 1271)
 
 [node name="Spawner" type="Node2D"]
 script = ExtResource("1_5p3ar")
+spawn_count = 1
+max_instances_per_spawner = 5
 
 [node name="SpawnArea" type="Area2D" parent="."]
 collision_layer = 0

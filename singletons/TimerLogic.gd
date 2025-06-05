@@ -67,9 +67,11 @@ func restar_tiempo(cantidad: float):
 		print("Tiempo restado: -%.1f segundos. Total: %.1f" % [cantidad, tiempo_actual])
 
 func _tiempo_terminado():
+	GameManager.next_wave()
 	esta_corriendo = false
-	print("¡Tiempo agotado!")
 	tiempo_agotado.emit()
+	reiniciar_completamente()
+	iniciar_temporizador()
 
 func _process(delta: float):
 	if esta_corriendo and not tiempo_pausado:

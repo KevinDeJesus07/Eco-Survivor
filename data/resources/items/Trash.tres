@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TrashItem" load_steps=2 format=3 uid="uid://bgxiu1txbq5m8"]
+
+[ext_resource type="Script" uid="uid://dqe5lprq41dro" path="res://scripts/items/TrashItem.gd" id="1_787e5"]
+
+[resource]
+script = ExtResource("1_787e5")
+score_amount = 1
+name = "Unnamed item"
+desc = ""
+is_stacked = true
+stack_max = 10
+color = Color(0.627451, 0.12549, 0.941176, 1)
+metadata/_custom_type_script = "uid://dqe5lprq41dro"

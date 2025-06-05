@@ -1,11 +1,9 @@
-# BaseEntity.gd
 extends CharacterBody2D
 class_name BaseEntity
 
 const LOG_CAT: String = "BASE_ENTITY"
 
 @export_group("Base Stats")
-#@export var display_name: String = "default"
 @export var max_hp: int = 100
 @export var speed: float = 75.0
 
@@ -41,11 +39,15 @@ var stuck_timer: Timer
 
 signal display_name_changed(new_name)
 
-var display_name: String = "Entity":
+var display_name: String = "Slime":
 	set(value):
 		if display_name != value:
 			display_name = value
 			emit_signal("display_name_changed", value)
+
+func is_in_dying_state() -> bool:
+	return current_state == State.DYING
+
 
 func _ready():
 	hp = max_hp
@@ -213,7 +215,7 @@ func take_damage(amount: int):
 		return
 
 	hp -= amount
-	GameManager.player_hp = hp
+	#GameManager.player_hp = hp
 	Logger.debug(LOG_CAT, "'%s' recibió %d de daño. HP: %d/%d" % [name, amount, hp, max_hp], self)
 
 	if is_instance_valid(hud_instance) and hud_instance.has_method("update_health"):
