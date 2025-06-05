@@ -82,6 +82,14 @@ position = Vector2(579, 217)
 motion_mode = 1
 max_hp = 10
 speed = 250.0
+can_patrol = null
+patrol_idle_time = null
+patrol_stuck_time = null
+patrol_area_mode = null
+patrol_center_offset = null
+patrol_radius = null
+patrol_rect_min_offset = null
+patrol_rect_max_offset = null
 
 [node name="InventoryLayer" type="CanvasLayer" parent="."]
 

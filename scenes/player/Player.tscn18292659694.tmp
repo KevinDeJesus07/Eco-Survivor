@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://4crmle28okii"]
+[gd_scene load_steps=11 format=3 uid="uid://4crmle28okii"]
 
 [ext_resource type="Script" uid="uid://dquxulnq5yjc7" path="res://scripts/player/Player.gd" id="1_wr5hl"]
 [ext_resource type="PackedScene" uid="uid://gaj3apuy1seo" path="res://scenes/ui/PlayerHUD.tscn" id="2_4kuee"]
@@ -30,18 +30,25 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_180ig")
 }],
-"loop": false,
+"loop": true,
 "name": &"attack",
-"speed": 10.0
+"speed": 5.0
 }]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v42im"]
-size = Vector2(171, 80)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_wr5hl")
+max_hp = null
+speed = null
+can_patrol = null
+patrol_idle_time = null
+patrol_stuck_time = null
+patrol_area_mode = null
+patrol_center_offset = null
+patrol_radius = null
+patrol_rect_min_offset = null
+patrol_rect_max_offset = null
 hud = ExtResource("2_4kuee")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
@@ -61,12 +68,3 @@ position = Vector2(-5, 28)
 scale = Vector2(3.13158, 3.375)
 sprite_frames = SubResource("SpriteFrames_20koh")
 animation = &"attack"
-frame = 4
-
-[node name="AttackArea" type="Area2D" parent="."]
-collision_layer = 64
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(-1.5, 41)
-shape = SubResource("RectangleShape2D_v42im")

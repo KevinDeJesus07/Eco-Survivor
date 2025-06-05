@@ -45,6 +45,10 @@ var display_name: String = "Slime":
 			display_name = value
 			emit_signal("display_name_changed", value)
 
+func is_in_dying_state() -> bool:
+	return current_state == State.DYING
+
+
 func _ready():
 	hp = max_hp
 	initial_pos = global_position
@@ -211,7 +215,7 @@ func take_damage(amount: int):
 		return
 
 	hp -= amount
-	GameManager.player_hp = hp
+	#GameManager.player_hp = hp
 	Logger.debug(LOG_CAT, "'%s' recibió %d de daño. HP: %d/%d" % [name, amount, hp, max_hp], self)
 
 	if is_instance_valid(hud_instance) and hud_instance.has_method("update_health"):
